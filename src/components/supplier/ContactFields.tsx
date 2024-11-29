@@ -11,15 +11,15 @@ export function ContactFields({ form }: ContactFieldsProps) {
   return (
     <div className="space-y-4">
       <h2 className="text-lg font-semibold">Contato</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         <FormField
           control={form.control}
           name="telefoneFixo"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Telefone Fixo</FormLabel>
+              <FormLabel className="text-xs">Telefone Fixo</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -31,9 +31,9 @@ export function ContactFields({ form }: ContactFieldsProps) {
           name="whatsapp"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Celular/WhatsApp</FormLabel>
+              <FormLabel className="text-xs">Celular/WhatsApp</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -45,9 +45,9 @@ export function ContactFields({ form }: ContactFieldsProps) {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email Principal</FormLabel>
+              <FormLabel className="text-xs">Email Principal</FormLabel>
               <FormControl>
-                <Input type="email" {...field} />
+                <Input type="email" {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -59,9 +59,9 @@ export function ContactFields({ form }: ContactFieldsProps) {
           name="emailFinanceiro"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email Financeiro</FormLabel>
+              <FormLabel className="text-xs">Email Financeiro</FormLabel>
               <FormControl>
-                <Input type="email" {...field} />
+                <Input type="email" {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -73,9 +73,9 @@ export function ContactFields({ form }: ContactFieldsProps) {
           name="website"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Website</FormLabel>
+              <FormLabel className="text-xs">Website</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -87,9 +87,9 @@ export function ContactFields({ form }: ContactFieldsProps) {
           name="responsavelNome"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nome do Responsável</FormLabel>
+              <FormLabel className="text-xs">Nome do Responsável</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -101,9 +101,9 @@ export function ContactFields({ form }: ContactFieldsProps) {
           name="responsavelFuncao"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Função do Responsável</FormLabel>
+              <FormLabel className="text-xs">Função do Responsável</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>

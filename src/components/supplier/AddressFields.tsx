@@ -49,146 +49,149 @@ export function AddressFields({ form }: AddressFieldsProps) {
   }, [form.watch("cidade"), cities])
 
   return (
-    <>
-      <FormField
-        control={form.control}
-        name="cep"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>CEP</FormLabel>
-            <FormControl>
-              <Input {...field} type="text" inputMode="numeric" pattern="[0-9]*" maxLength={8} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-
-      <FormField
-        control={form.control}
-        name="pais"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>País</FormLabel>
-            <FormControl>
-              <Input {...field} disabled />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-
-      <FormField
-        control={form.control}
-        name="uf"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>UF</FormLabel>
-            <Select
-              onValueChange={(value) => {
-                field.onChange(value)
-                setSelectedState(value)
-              }}
-              value={field.value}
-            >
+    <div className="space-y-4">
+      <h2 className="text-lg font-semibold">Endereço Principal</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        <FormField
+          control={form.control}
+          name="cep"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-xs">CEP</FormLabel>
               <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione o estado" />
-                </SelectTrigger>
+                <Input {...field} className="h-8 text-xs" type="text" inputMode="numeric" pattern="[0-9]*" maxLength={8} />
               </FormControl>
-              <SelectContent>
-                {states.map((state) => (
-                  <SelectItem key={state.id} value={state.sigla}>
-                    {state.nome}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="cidade"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Cidade</FormLabel>
-            <Select onValueChange={field.onChange} value={field.value}>
+        <FormField
+          control={form.control}
+          name="pais"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-xs">País</FormLabel>
               <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione a cidade" />
-                </SelectTrigger>
+                <Input {...field} className="h-8 text-xs" disabled />
               </FormControl>
-              <SelectContent>
-                {cities.map((city) => (
-                  <SelectItem key={city.id} value={city.nome}>
-                    {city.nome}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="logradouro"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Logradouro</FormLabel>
-            <FormControl>
-              <Input {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        <FormField
+          control={form.control}
+          name="uf"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-xs">UF</FormLabel>
+              <Select
+                onValueChange={(value) => {
+                  field.onChange(value)
+                  setSelectedState(value)
+                }}
+                value={field.value}
+              >
+                <FormControl>
+                  <SelectTrigger className="h-8 text-xs">
+                    <SelectValue placeholder="Selecione o estado" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {states.map((state) => (
+                    <SelectItem key={state.id} value={state.sigla}>
+                      {state.nome}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="numero"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Número</FormLabel>
-            <FormControl>
-              <Input {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        <FormField
+          control={form.control}
+          name="cidade"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-xs">Cidade</FormLabel>
+              <Select onValueChange={field.onChange} value={field.value}>
+                <FormControl>
+                  <SelectTrigger className="h-8 text-xs">
+                    <SelectValue placeholder="Selecione a cidade" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {cities.map((city) => (
+                    <SelectItem key={city.id} value={city.nome}>
+                      {city.nome}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="complemento"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Complemento</FormLabel>
-            <FormControl>
-              <Input {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        <FormField
+          control={form.control}
+          name="logradouro"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-xs">Logradouro</FormLabel>
+              <FormControl>
+                <Input {...field} className="h-8 text-xs" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="bairro"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Bairro</FormLabel>
-            <FormControl>
-              <Input {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-    </>
+        <FormField
+          control={form.control}
+          name="numero"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-xs">Número</FormLabel>
+              <FormControl>
+                <Input {...field} className="h-8 text-xs" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="complemento"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-xs">Complemento</FormLabel>
+              <FormControl>
+                <Input {...field} className="h-8 text-xs" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="bairro"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-xs">Bairro</FormLabel>
+              <FormControl>
+                <Input {...field} className="h-8 text-xs" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+    </div>
   )
 }

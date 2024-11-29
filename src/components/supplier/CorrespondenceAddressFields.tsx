@@ -44,15 +44,15 @@ export function CorrespondenceAddressFields({ form }: CorrespondenceAddressField
   return (
     <div className="space-y-4">
       <h2 className="text-lg font-semibold">Endereço de Correspondência</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         <FormField
           control={form.control}
           name="enderecoCorrespondenciaCep"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>CEP</FormLabel>
+              <FormLabel className="text-xs">CEP</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -64,9 +64,9 @@ export function CorrespondenceAddressFields({ form }: CorrespondenceAddressField
           name="enderecoCorrespondenciaPais"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>País</FormLabel>
+              <FormLabel className="text-xs">País</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -78,7 +78,7 @@ export function CorrespondenceAddressFields({ form }: CorrespondenceAddressField
           name="enderecoCorrespondenciaUf"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>UF</FormLabel>
+              <FormLabel className="text-xs">UF</FormLabel>
               <Select
                 onValueChange={(value) => {
                   field.onChange(value)
@@ -87,7 +87,7 @@ export function CorrespondenceAddressFields({ form }: CorrespondenceAddressField
                 value={field.value}
               >
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="h-8 text-xs">
                     <SelectValue placeholder="Selecione o estado" />
                   </SelectTrigger>
                 </FormControl>
@@ -109,13 +109,13 @@ export function CorrespondenceAddressFields({ form }: CorrespondenceAddressField
           name="enderecoCorrespondenciaCidade"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Cidade</FormLabel>
+              <FormLabel className="text-xs">Cidade</FormLabel>
               <Select
                 onValueChange={field.onChange}
                 value={field.value}
               >
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="h-8 text-xs">
                     <SelectValue placeholder="Selecione a cidade" />
                   </SelectTrigger>
                 </FormControl>
@@ -137,9 +137,9 @@ export function CorrespondenceAddressFields({ form }: CorrespondenceAddressField
           name="enderecoCorrespondenciaLogradouro"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Logradouro</FormLabel>
+              <FormLabel className="text-xs">Logradouro</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -151,9 +151,9 @@ export function CorrespondenceAddressFields({ form }: CorrespondenceAddressField
           name="enderecoCorrespondenciaNumero"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Número</FormLabel>
+              <FormLabel className="text-xs">Número</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -165,9 +165,9 @@ export function CorrespondenceAddressFields({ form }: CorrespondenceAddressField
           name="enderecoCorrespondenciaComplemento"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Complemento</FormLabel>
+              <FormLabel className="text-xs">Complemento</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -179,9 +179,9 @@ export function CorrespondenceAddressFields({ form }: CorrespondenceAddressField
           name="enderecoCorrespondenciaBairro"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Bairro</FormLabel>
+              <FormLabel className="text-xs">Bairro</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>

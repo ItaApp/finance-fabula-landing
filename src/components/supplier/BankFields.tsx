@@ -12,15 +12,15 @@ export function BankFields({ form }: BankFieldsProps) {
   return (
     <div className="space-y-4">
       <h2 className="text-lg font-semibold">Dados Bancários</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         <FormField
           control={form.control}
           name="banco"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Banco</FormLabel>
+              <FormLabel className="text-xs">Banco</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -32,9 +32,9 @@ export function BankFields({ form }: BankFieldsProps) {
           name="agencia"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Agência</FormLabel>
+              <FormLabel className="text-xs">Agência</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -46,9 +46,9 @@ export function BankFields({ form }: BankFieldsProps) {
           name="conta"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Conta</FormLabel>
+              <FormLabel className="text-xs">Conta</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -60,10 +60,10 @@ export function BankFields({ form }: BankFieldsProps) {
           name="tipoConta"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Tipo de Conta</FormLabel>
+              <FormLabel className="text-xs">Tipo de Conta</FormLabel>
               <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="h-8 text-xs">
                     <SelectValue placeholder="Selecione o tipo de conta" />
                   </SelectTrigger>
                 </FormControl>
@@ -82,9 +82,9 @@ export function BankFields({ form }: BankFieldsProps) {
           name="titularConta"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Titular da Conta</FormLabel>
+              <FormLabel className="text-xs">Titular da Conta</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -96,9 +96,9 @@ export function BankFields({ form }: BankFieldsProps) {
           name="chavePix"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Chave PIX</FormLabel>
+              <FormLabel className="text-xs">Chave PIX</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>

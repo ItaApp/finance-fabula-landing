@@ -13,16 +13,16 @@ export function GeneralFields({ form }: GeneralFieldsProps) {
   return (
     <div className="space-y-4">
       <h2 className="text-lg font-semibold">Informações Gerais</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         <FormField
           control={form.control}
           name="tipoPessoa"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Tipo de Pessoa</FormLabel>
+              <FormLabel className="text-xs">Tipo de Pessoa</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="h-8 text-xs">
                     <SelectValue placeholder="Selecione o tipo de pessoa" />
                   </SelectTrigger>
                 </FormControl>
@@ -41,9 +41,9 @@ export function GeneralFields({ form }: GeneralFieldsProps) {
           name="nome"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Razão Social</FormLabel>
+              <FormLabel className="text-xs">Razão Social</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -55,9 +55,9 @@ export function GeneralFields({ form }: GeneralFieldsProps) {
           name="nomeFantasia"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nome Fantasia</FormLabel>
+              <FormLabel className="text-xs">Nome Fantasia</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -69,9 +69,9 @@ export function GeneralFields({ form }: GeneralFieldsProps) {
           name="cpfCnpj"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>CPF/CNPJ</FormLabel>
+              <FormLabel className="text-xs">CPF/CNPJ</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -82,7 +82,7 @@ export function GeneralFields({ form }: GeneralFieldsProps) {
           control={form.control}
           name="isentoIE"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-2">
               <FormControl>
                 <Checkbox
                   checked={field.value}
@@ -90,7 +90,7 @@ export function GeneralFields({ form }: GeneralFieldsProps) {
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
-                <FormLabel>
+                <FormLabel className="text-xs">
                   Isento de Inscrição Estadual
                 </FormLabel>
               </div>
@@ -103,9 +103,9 @@ export function GeneralFields({ form }: GeneralFieldsProps) {
           name="inscricaoEstadual"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Inscrição Estadual</FormLabel>
+              <FormLabel className="text-xs">Inscrição Estadual</FormLabel>
               <FormControl>
-                <Input {...field} disabled={form.watch("isentoIE")} />
+                <Input {...field} className="h-8 text-xs" disabled={form.watch("isentoIE")} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -117,9 +117,9 @@ export function GeneralFields({ form }: GeneralFieldsProps) {
           name="inscricaoMunicipal"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Inscrição Municipal</FormLabel>
+              <FormLabel className="text-xs">Inscrição Municipal</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} className="h-8 text-xs" />
               </FormControl>
               <FormMessage />
             </FormItem>
