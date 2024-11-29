@@ -6,6 +6,7 @@ import { useUser } from "@supabase/auth-helpers-react"
 
 import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { supabase } from "@/integrations/supabase/client"
 import { GeneralFields } from "./supplier/GeneralFields"
 import { ContactFields } from "./supplier/ContactFields"
@@ -14,6 +15,7 @@ import { CorrespondenceAddressFields } from "./supplier/CorrespondenceAddressFie
 import { BankFields } from "./supplier/BankFields"
 import { CommercialFields } from "./supplier/CommercialFields"
 import { supplierFormSchema, type SupplierFormValues } from "./supplier/types"
+import { Building2, Contact, MapPin, Landmark, BarChart3 } from "lucide-react"
 
 export function SupplierRegistrationForm() {
   const user = useUser()
@@ -106,12 +108,53 @@ export function SupplierRegistrationForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <GeneralFields form={form} />
-        <ContactFields form={form} />
-        <AddressFields form={form} />
-        <CorrespondenceAddressFields form={form} />
-        <BankFields form={form} />
-        <CommercialFields form={form} />
+        <Tabs defaultValue="general" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 gap-4">
+            <TabsTrigger value="general" className="flex items-center gap-2">
+              <Building2 className="h-4 w-4" />
+              <span className="hidden md:inline">Informações Gerais</span>
+            </TabsTrigger>
+            <TabsTrigger value="contact" className="flex items-center gap-2">
+              <Contact className="h-4 w-4" />
+              <span className="hidden md:inline">Contato</span>
+            </TabsTrigger>
+            <TabsTrigger value="address" className="flex items-center gap-2">
+              <MapPin className="h-4 w-4" />
+              <span className="hidden md:inline">Endereços</span>
+            </TabsTrigger>
+            <TabsTrigger value="bank" className="flex items-center gap-2">
+              <Landmark className="h-4 w-4" />
+              <span className="hidden md:inline">Dados Bancários</span>
+            </TabsTrigger>
+            <TabsTrigger value="commercial" className="flex items-center gap-2">
+              <BarChart3 className="h-4 w-4" />
+              <span className="hidden md:inline">Dados Comerciais</span>
+            </TabsTrigger>
+          </TabsList>
+
+          <div className="mt-6">
+            <TabsContent value="general" className="space-y-4">
+              <GeneralFields form={form} />
+            </TabsContent>
+
+            <TabsContent value="contact" className="space-y-4">
+              <ContactFields form={form} />
+            </TabsContent>
+
+            <TabsContent value="address" className="space-y-4">
+              <AddressFields form={form} />
+              <CorrespondenceAddressFields form={form} />
+            </TabsContent>
+
+            <TabsContent value="bank" className="space-y-4">
+              <BankFields form={form} />
+            </TabsContent>
+
+            <TabsContent value="commercial" className="space-y-4">
+              <CommercialFields form={form} />
+            </TabsContent>
+          </div>
+        </Tabs>
 
         <Button type="submit" className="w-full">
           Cadastrar Fornecedor
