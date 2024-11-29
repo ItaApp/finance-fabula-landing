@@ -1,4 +1,4 @@
-import { DollarSign, FileText, ChartBar, Calendar, Printer, Check } from "lucide-react";
+import { DollarSign, FileText, ChartBar, Calendar, Printer, Check, LogIn, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const features = [
@@ -33,7 +33,33 @@ const stats = [
 const Index = () => {
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50 border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="text-xl font-bold text-dark">FinanceFabula</div>
+            <div className="flex gap-4">
+              <Button
+                variant="outline"
+                className="flex items-center gap-2"
+              >
+                <LogIn className="w-4 h-4" />
+                Login
+              </Button>
+              <Button
+                className="flex items-center gap-2"
+              >
+                <User className="w-4 h-4" />
+                Cadastro
+              </Button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Add padding to account for fixed header */}
+      <div className="pt-16">
+        {/* Hero Section */}
       <section className="relative bg-dark py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center">
@@ -55,7 +81,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Features Section */}
+        {/* Features Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl sm:text-4xl font-bold text-center text-dark mb-16">
@@ -77,7 +103,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Stats Section */}
+        {/* Stats Section */}
       <section className="bg-primary py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -95,7 +121,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+        {/* CTA Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-dark mb-8">
@@ -120,7 +146,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Footer */}
+        {/* Footer */}
       <footer className="bg-dark text-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
@@ -155,6 +181,7 @@ const Index = () => {
           <p>&copy; 2024 Sistema de Gestão Financeira. Todos os direitos reservados.</p>
         </div>
       </footer>
+      </div>
     </div>
   );
 };
