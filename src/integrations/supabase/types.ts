@@ -11,48 +11,127 @@ export type Database = {
     Tables: {
       accounts_payable: {
         Row: {
+          accounting_plan: string | null
+          adjusted_due_date: string | null
           amount: number
+          associated_project: string | null
+          bank_account: string | null
+          bank_reconciliation_status: string | null
+          barcode: string | null
+          category: string | null
+          cost_center: string | null
           created_at: string
           description: string
+          discount_amount: number | null
           document_number: string | null
+          document_type: string | null
+          document_url: string | null
           due_date: string
           id: string
+          interest_amount: number | null
+          internal_notes: string | null
+          issue_date: string | null
+          last_modified_at: string | null
+          last_modified_by: string | null
           notes: string | null
+          occurrence: string | null
+          original_amount: number | null
+          original_due_date: string | null
           owner_id: string
           payment_date: string | null
           payment_method: string | null
+          payment_proof_url: string | null
+          priority: string | null
+          reference_period: string | null
+          remaining_balance: number | null
           status: string
+          subcategory: string | null
           supplier_id: string | null
         }
         Insert: {
+          accounting_plan?: string | null
+          adjusted_due_date?: string | null
           amount: number
+          associated_project?: string | null
+          bank_account?: string | null
+          bank_reconciliation_status?: string | null
+          barcode?: string | null
+          category?: string | null
+          cost_center?: string | null
           created_at?: string
           description: string
+          discount_amount?: number | null
           document_number?: string | null
+          document_type?: string | null
+          document_url?: string | null
           due_date: string
           id?: string
+          interest_amount?: number | null
+          internal_notes?: string | null
+          issue_date?: string | null
+          last_modified_at?: string | null
+          last_modified_by?: string | null
           notes?: string | null
+          occurrence?: string | null
+          original_amount?: number | null
+          original_due_date?: string | null
           owner_id: string
           payment_date?: string | null
           payment_method?: string | null
+          payment_proof_url?: string | null
+          priority?: string | null
+          reference_period?: string | null
+          remaining_balance?: number | null
           status?: string
+          subcategory?: string | null
           supplier_id?: string | null
         }
         Update: {
+          accounting_plan?: string | null
+          adjusted_due_date?: string | null
           amount?: number
+          associated_project?: string | null
+          bank_account?: string | null
+          bank_reconciliation_status?: string | null
+          barcode?: string | null
+          category?: string | null
+          cost_center?: string | null
           created_at?: string
           description?: string
+          discount_amount?: number | null
           document_number?: string | null
+          document_type?: string | null
+          document_url?: string | null
           due_date?: string
           id?: string
+          interest_amount?: number | null
+          internal_notes?: string | null
+          issue_date?: string | null
+          last_modified_at?: string | null
+          last_modified_by?: string | null
           notes?: string | null
+          occurrence?: string | null
+          original_amount?: number | null
+          original_due_date?: string | null
           owner_id?: string
           payment_date?: string | null
           payment_method?: string | null
+          payment_proof_url?: string | null
+          priority?: string | null
+          reference_period?: string | null
+          remaining_balance?: number | null
           status?: string
+          subcategory?: string | null
           supplier_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "accounts_payable_last_modified_by_fkey"
+            columns: ["last_modified_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "accounts_payable_owner_id_fkey"
             columns: ["owner_id"]

@@ -4,39 +4,20 @@ import { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
 import { useUser } from "@supabase/auth-helpers-react"
-import { z } from "zod"
 
 import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
 import { supabase } from "@/integrations/supabase/client"
-
-const accountsPayableSchema = z.object({
-  description: z.string().min(1, "Descrição é obrigatória"),
-  amount: z.string().min(1, "Valor é obrigatório"),
-  dueDate: z.string().min(1, "Data de vencimento é obrigatória"),
-  supplierId: z.string().optional(),
-  documentNumber: z.string().optional(),
-  paymentMethod: z.string().optional(),
-  notes: z.string().optional(),
-})
-
-type AccountsPayableValues = z.infer<typeof accountsPayableSchema>
+import { DocumentFields } from "./accounts-payable/DocumentFields"
+import { PaymentFields } from "./accounts-payable/PaymentFields"
+import { ClassificationFields } from "./accounts-payable/ClassificationFields"
+import { accountsPayableSchema, type AccountsPayableFormValues } from "./accounts-payable/types"
 
 export function AccountsPayableForm() {
   const user = useUser()
   const [isLoading, setIsLoading] = useState(false)
 
-  const form = useForm<AccountsPayableValues>({
+  const form = useForm<AccountsPayableFormValues>({
     resolver: zodResolver(accountsPayableSchema),
   })
 
@@ -51,7 +32,7 @@ export function AccountsPayableForm() {
     },
   })
 
-  async function onSubmit(data: AccountsPayableValues) {
+  async function onSubmit(data: AccountsPayableFormValues) {
     if (!user) {
       toast.error("Você precisa estar logado para cadastrar uma conta")
       return
@@ -65,8 +46,28 @@ export function AccountsPayableForm() {
         due_date: data.dueDate,
         supplier_id: data.supplierId,
         document_number: data.documentNumber,
+        document_type: data.documentType,
+        issue_date: data.issueDate,
+        original_due_date: data.originalDueDate,
+        adjusted_due_date: data.adjustedDueDate,
+        occurrence: data.occurrence,
+        reference_period: data.referencePeriod,
+        original_amount: data.originalAmount ? parseFloat(data.originalAmount) : null,
+        interest_amount: data.interestAmount ? parseFloat(data.interestAmount) : null,
+        discount_amount: data.discountAmount ? parseFloat(data.discountAmount) : null,
+        remaining_balance: data.remainingBalance ? parseFloat(data.remainingBalance) : null,
         payment_method: data.paymentMethod,
+        bank_account: data.bankAccount,
+        barcode: data.barcode,
+        category: data.category,
+        subcategory: data.subcategory,
+        cost_center: data.costCenter,
+        associated_project: data.associatedProject,
+        accounting_plan: data.accountingPlan,
+        bank_reconciliation_status: data.bankReconciliationStatus,
+        priority: data.priority,
         notes: data.notes,
+        internal_notes: data.internalNotes,
         owner_id: user.id,
       })
 
@@ -84,125 +85,16 @@ export function AccountsPayableForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Descrição</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="amount"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Valor</FormLabel>
-              <FormControl>
-                <Input {...field} type="number" step="0.01" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="dueDate"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Data de Vencimento</FormLabel>
-              <FormControl>
-                <Input {...field} type="date" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="supplierId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Fornecedor</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione um fornecedor" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {suppliers?.map((supplier) => (
-                    <SelectItem key={supplier.id} value={supplier.id}>
-                      {supplier.nome}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="documentNumber"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Número do Documento</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="paymentMethod"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Método de Pagamento</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione um método" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="pix">PIX</SelectItem>
-                  <SelectItem value="boleto">Boleto</SelectItem>
-                  <SelectItem value="cartao">Cartão</SelectItem>
-                  <SelectItem value="dinheiro">Dinheiro</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="notes"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Observações</FormLabel>
-              <FormControl>
-                <Textarea {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-6">
+            <DocumentFields form={form} />
+            <PaymentFields form={form} />
+          </div>
+          <div className="space-y-6">
+            <ClassificationFields form={form} />
+          </div>
+        </div>
 
         <Button type="submit" className="w-full" disabled={isLoading}>
           {isLoading ? "Cadastrando..." : "Cadastrar Conta"}
