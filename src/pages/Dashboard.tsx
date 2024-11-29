@@ -1,8 +1,29 @@
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
-import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer } from "recharts";
-import { Wallet, TrendingUp, ArrowUpRight, ArrowDownRight, DollarSign } from "lucide-react";
+import { AreaChart, Area, XAxis, YAxis } from "recharts";
+import {
+  Wallet,
+  TrendingUp,
+  ArrowUpRight,
+  ArrowDownRight,
+  DollarSign,
+  Home,
+  User,
+  Truck,
+  FileText,
+  Settings,
+} from "lucide-react";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 
 const data = [
   { month: "Jan", value: 2400 },
@@ -15,30 +36,81 @@ const data = [
 
 const Dashboard = () => {
   return (
-    <div className="min-h-screen bg-background p-6">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-foreground">Financial Dashboard</h1>
-        <p className="text-muted-foreground">Welcome back! Here's your financial overview</p>
-      </div>
+    <SidebarProvider defaultOpen>
+      <div className="flex min-h-screen">
+        <Sidebar>
+          <SidebarHeader className="border-b border-border/5">
+            <div className="flex h-[60px] items-center px-6">
+              <SidebarTrigger />
+              <span className="ml-2 text-lg font-semibold">Sistema de Gestão</span>
+            </div>
+          </SidebarHeader>
+          <SidebarContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton tooltip="Início">
+                  <Home className="h-4 w-4" />
+                  <span>Início</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton tooltip="Cliente">
+                  <User className="h-4 w-4" />
+                  <span>Cliente</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton tooltip="Fornecedor">
+                  <Truck className="h-4 w-4" />
+                  <span>Fornecedor</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton tooltip="Financeiro">
+                  <DollarSign className="h-4 w-4" />
+                  <span>Financeiro</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton tooltip="Nota NFS-e">
+                  <FileText className="h-4 w-4" />
+                  <span>Nota NFS-e</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton tooltip="Configurações">
+                  <Settings className="h-4 w-4" />
+                  <span>Configurações</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarContent>
+        </Sidebar>
 
-      {/* Cards Grid */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
-        <Card className="p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-muted-foreground">Total Balance</p>
-              <h3 className="text-2xl font-bold">$12,560</h3>
-              <p className="text-sm text-green-500 flex items-center mt-1">
-                <TrendingUp className="w-4 h-4 mr-1" />
-                +12.5%
-              </p>
-            </div>
-            <div className="bg-primary/10 p-3 rounded-full">
-              <Wallet className="w-6 h-6 text-primary" />
-            </div>
+        <div className="flex-1 bg-background p-6">
+          {/* Header */}
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-foreground">Painel Financeiro</h1>
+            <p className="text-muted-foreground">Bem-vindo! Aqui está sua visão geral financeira</p>
           </div>
-        </Card>
+
+          {/* Cards Grid */}
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
+            <Card className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-muted-foreground">Saldo Total</p>
+                  <h3 className="text-2xl font-bold">R$ 12.560</h3>
+                  <p className="text-sm text-green-500 flex items-center mt-1">
+                    <TrendingUp className="w-4 h-4 mr-1" />
+                    +12.5%
+                  </p>
+                </div>
+                <div className="bg-primary/10 p-3 rounded-full">
+                  <Wallet className="w-6 h-6 text-primary" />
+                </div>
+              </div>
+            </Card>
 
         <Card className="p-6">
           <div className="flex items-center justify-between">
@@ -87,22 +159,23 @@ const Dashboard = () => {
             </div>
           </div>
         </Card>
-      </div>
 
-      {/* Chart Section */}
-      <Card className="p-6 mb-8">
-        <h3 className="text-lg font-semibold mb-4">Financial Overview</h3>
-        <div className="h-[300px]">
-          <ChartContainer
-            config={{
-              value: {
-                theme: {
-                  light: "#0EA5E9",
-                  dark: "#0EA5E9",
-                },
-              },
-            }}
-          >
+          </div>
+
+          {/* Chart Section */}
+          <Card className="p-6 mb-8">
+            <h3 className="text-lg font-semibold mb-4">Visão Geral Financeira</h3>
+            <div className="h-[300px]">
+              <ChartContainer
+                config={{
+                  value: {
+                    theme: {
+                      light: "#0EA5E9",
+                      dark: "#0EA5E9",
+                    },
+                  },
+                }}
+              >
             <AreaChart data={data}>
               <defs>
                 <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
@@ -121,14 +194,14 @@ const Dashboard = () => {
                 fill="url(#colorValue)"
               />
             </AreaChart>
-          </ChartContainer>
-        </div>
-      </Card>
+              </ChartContainer>
+            </div>
+          </Card>
 
-      {/* Recent Transactions */}
-      <Card className="p-6">
-        <h3 className="text-lg font-semibold mb-4">Recent Transactions</h3>
-        <ScrollArea className="h-[300px] w-full">
+          {/* Recent Transactions */}
+          <Card className="p-6">
+            <h3 className="text-lg font-semibold mb-4">Transações Recentes</h3>
+            <ScrollArea className="h-[300px] w-full">
           {[...Array(10)].map((_, i) => (
             <div
               key={i}
@@ -156,9 +229,11 @@ const Dashboard = () => {
               </p>
             </div>
           ))}
-        </ScrollArea>
-      </Card>
-    </div>
+            </ScrollArea>
+          </Card>
+        </div>
+      </div>
+    </SidebarProvider>
   );
 };
 
