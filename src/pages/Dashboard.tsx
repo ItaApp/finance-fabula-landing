@@ -24,6 +24,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import Header from "@/components/Header";
 
 const data = [
   { month: "Jan", value: 2400 },
@@ -87,14 +88,16 @@ const Dashboard = () => {
           </SidebarContent>
         </Sidebar>
 
-        <div className="flex-1 bg-background p-6">
-          {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground">Painel Financeiro</h1>
-            <p className="text-muted-foreground">Bem-vindo! Aqui está sua visão geral financeira</p>
-          </div>
+        <div className="flex-1">
+          <Header />
+          <div className="bg-background p-6">
+            {/* Header */}
+            <div className="mb-8">
+              <h1 className="text-3xl font-bold text-foreground">Painel Financeiro</h1>
+              <p className="text-muted-foreground">Bem-vindo! Aqui está sua visão geral financeira</p>
+            </div>
 
-          {/* Cards Grid */}
+            {/* Cards Grid */}
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
             <Card className="p-6">
               <div className="flex items-center justify-between">
@@ -162,43 +165,43 @@ const Dashboard = () => {
 
           </div>
 
-          {/* Chart Section */}
-          <Card className="p-6 mb-8">
-            <h3 className="text-lg font-semibold mb-4">Visão Geral Financeira</h3>
-            <div className="h-[300px]">
-              <ChartContainer
-                config={{
-                  value: {
-                    theme: {
-                      light: "#0EA5E9",
-                      dark: "#0EA5E9",
+            {/* Chart Section */}
+            <Card className="p-6 mb-8">
+              <h3 className="text-lg font-semibold mb-4">Visão Geral Financeira</h3>
+              <div className="h-[400px]">
+                <ChartContainer
+                  config={{
+                    value: {
+                      theme: {
+                        light: "#0EA5E9",
+                        dark: "#0EA5E9",
+                      },
                     },
-                  },
-                }}
-              >
-            <AreaChart data={data}>
-              <defs>
-                <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#0EA5E9" stopOpacity={0.3} />
-                  <stop offset="95%" stopColor="#0EA5E9" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <XAxis dataKey="month" />
-              <YAxis />
-              <ChartTooltip />
-              <Area
-                type="monotone"
-                dataKey="value"
-                stroke="#0EA5E9"
-                fillOpacity={1}
-                fill="url(#colorValue)"
-              />
-            </AreaChart>
-              </ChartContainer>
-            </div>
-          </Card>
+                  }}
+                >
+                  <AreaChart data={data}>
+                    <defs>
+                      <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#0EA5E9" stopOpacity={0.3} />
+                        <stop offset="95%" stopColor="#0EA5E9" stopOpacity={0} />
+                      </linearGradient>
+                    </defs>
+                    <XAxis dataKey="month" />
+                    <YAxis />
+                    <ChartTooltip />
+                    <Area
+                      type="monotone"
+                      dataKey="value"
+                      stroke="#0EA5E9"
+                      fillOpacity={1}
+                      fill="url(#colorValue)"
+                    />
+                  </AreaChart>
+                </ChartContainer>
+              </div>
+            </Card>
 
-          {/* Recent Transactions */}
+            {/* Recent Transactions */}
           <Card className="p-6">
             <h3 className="text-lg font-semibold mb-4">Transações Recentes</h3>
             <ScrollArea className="h-[300px] w-full">
@@ -231,6 +234,7 @@ const Dashboard = () => {
           ))}
             </ScrollArea>
           </Card>
+          </div>
         </div>
       </div>
     </SidebarProvider>
