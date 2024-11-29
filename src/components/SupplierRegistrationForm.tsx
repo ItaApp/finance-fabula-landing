@@ -107,50 +107,50 @@ export function SupplierRegistrationForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <Tabs defaultValue="general" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 gap-4">
-            <TabsTrigger value="general" className="flex items-center gap-2">
-              <Building2 className="h-4 w-4" />
+          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 gap-2">
+            <TabsTrigger value="general" className="flex items-center gap-1 text-xs">
+              <Building2 className="h-3 w-3" />
               <span className="hidden md:inline">Informações Gerais</span>
             </TabsTrigger>
-            <TabsTrigger value="contact" className="flex items-center gap-2">
-              <Contact className="h-4 w-4" />
+            <TabsTrigger value="contact" className="flex items-center gap-1 text-xs">
+              <Contact className="h-3 w-3" />
               <span className="hidden md:inline">Contato</span>
             </TabsTrigger>
-            <TabsTrigger value="address" className="flex items-center gap-2">
-              <MapPin className="h-4 w-4" />
+            <TabsTrigger value="address" className="flex items-center gap-1 text-xs">
+              <MapPin className="h-3 w-3" />
               <span className="hidden md:inline">Endereços</span>
             </TabsTrigger>
-            <TabsTrigger value="bank" className="flex items-center gap-2">
-              <Landmark className="h-4 w-4" />
+            <TabsTrigger value="bank" className="flex items-center gap-1 text-xs">
+              <Landmark className="h-3 w-3" />
               <span className="hidden md:inline">Dados Bancários</span>
             </TabsTrigger>
-            <TabsTrigger value="commercial" className="flex items-center gap-2">
-              <BarChart3 className="h-4 w-4" />
+            <TabsTrigger value="commercial" className="flex items-center gap-1 text-xs">
+              <BarChart3 className="h-3 w-3" />
               <span className="hidden md:inline">Dados Comerciais</span>
             </TabsTrigger>
           </TabsList>
 
-          <div className="mt-6">
-            <TabsContent value="general" className="space-y-4">
+          <div className="mt-4">
+            <TabsContent value="general" className="space-y-3">
               <GeneralFields form={form} />
             </TabsContent>
 
-            <TabsContent value="contact" className="space-y-4">
+            <TabsContent value="contact" className="space-y-3">
               <ContactFields form={form} />
             </TabsContent>
 
-            <TabsContent value="address" className="space-y-4">
+            <TabsContent value="address" className="space-y-3">
               <AddressFields form={form} />
               <CorrespondenceAddressFields form={form} />
             </TabsContent>
 
-            <TabsContent value="bank" className="space-y-4">
+            <TabsContent value="bank" className="space-y-3">
               <BankFields form={form} />
             </TabsContent>
 
-            <TabsContent value="commercial" className="space-y-4">
+            <TabsContent value="commercial" className="space-y-3">
               <CommercialFields form={form} />
             </TabsContent>
           </div>
