@@ -9,6 +9,80 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      clients: {
+        Row: {
+          bairro: string
+          cep: string
+          cidade: string
+          cidade_ibge_id: number
+          complemento: string | null
+          cpf_cnpj: string
+          created_at: string
+          email: string
+          id: string
+          inscricao_estadual: string | null
+          inscricao_municipal: string | null
+          logradouro: string
+          nome: string
+          numero: string
+          owner_id: string
+          pais: string
+          telefone: string
+          tipo_pessoa: string
+          uf: string
+        }
+        Insert: {
+          bairro: string
+          cep: string
+          cidade: string
+          cidade_ibge_id: number
+          complemento?: string | null
+          cpf_cnpj: string
+          created_at?: string
+          email: string
+          id?: string
+          inscricao_estadual?: string | null
+          inscricao_municipal?: string | null
+          logradouro: string
+          nome: string
+          numero: string
+          owner_id: string
+          pais: string
+          telefone: string
+          tipo_pessoa: string
+          uf: string
+        }
+        Update: {
+          bairro?: string
+          cep?: string
+          cidade?: string
+          cidade_ibge_id?: number
+          complemento?: string | null
+          cpf_cnpj?: string
+          created_at?: string
+          email?: string
+          id?: string
+          inscricao_estadual?: string | null
+          inscricao_municipal?: string | null
+          logradouro?: string
+          nome?: string
+          numero?: string
+          owner_id?: string
+          pais?: string
+          telefone?: string
+          tipo_pessoa?: string
+          uf?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clients_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       companies: {
         Row: {
           address: string | null

@@ -1,68 +1,24 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import * as z from "zod"
 import { useState, useEffect } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
+import { useNavigate } from "react-router-dom"
+import { useUser } from "@supabase/auth-helpers-react"
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-
-const formSchema = z.object({
-  tipoPessoa: z.enum(["PF", "PJ"], {
-    required_error: "Selecione o tipo de pessoa",
-  }),
-  nome: z.string().min(1, "Nome é obrigatório"),
-  email: z.string().email("Email inválido").min(1, "Email é obrigatório"),
-  cpfCnpj: z.string().min(1, "CPF/CNPJ é obrigatório"),
-  inscricaoMunicipal: z.string().optional(),
-  inscricaoEstadual: z.string().optional(),
-  telefone: z.string().min(1, "Telefone é obrigatório"),
-  pais: z.string().min(1, "País é obrigatório"),
-  uf: z.string().min(1, "UF é obrigatório"),
-  cidade: z.string().min(1, "Cidade é obrigatório"),
-  logradouro: z.string().min(1, "Logradouro é obrigatório"),
-  numero: z.string().min(1, "Número é obrigatório"),
-  complemento: z.string().optional(),
-  bairro: z.string().min(1, "Bairro é obrigatório"),
-  cep: z.string().min(8, "CEP inválido").max(8, "CEP inválido"),
-})
-
-type FormValues = z.infer<typeof formSchema>
-
-interface State {
-  id: number
-  sigla: string
-  nome: string
-}
-
-interface City {
-  id: number
-  nome: string
-}
+import { supabase } from "@/integrations/supabase/client"
+import { PersonalFields } from "./client/PersonalFields"
+import { AddressFields } from "./client/AddressFields"
+import { clientFormSchema, type ClientFormValues } from "./client/types"
 
 export function ClientRegistrationForm() {
-  const [states, setStates] = useState<State[]>([])
-  const [cities, setCities] = useState<City[]>([])
-  const [selectedState, setSelectedState] = useState("")
+  const user = useUser()
+  const navigate = useNavigate()
 
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<ClientFormValues>({
+    resolver: zodResolver(clientFormSchema),
     defaultValues: {
       tipoPessoa: "PF",
       pais: "Brasil",
@@ -91,29 +47,40 @@ export function ClientRegistrationForm() {
     }
   }, [addressData, form])
 
-  useEffect(() => {
-    fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados")
-      .then((response) => response.json())
-      .then((data) => setStates(data))
-  }, [])
-
-  useEffect(() => {
-    if (selectedState) {
-      fetch(
-        `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedState}/municipios`
-      )
-        .then((response) => response.json())
-        .then((data) => setCities(data))
+  async function onSubmit(data: ClientFormValues) {
+    if (!user) {
+      toast.error("Você precisa estar logado para cadastrar um cliente")
+      return
     }
-  }, [selectedState])
 
-  async function onSubmit(data: FormValues) {
     try {
-      // Here you would typically save the data to your backend
-      console.log(data)
+      const { error } = await supabase.from("clients").insert({
+        tipo_pessoa: data.tipoPessoa,
+        nome: data.nome,
+        email: data.email,
+        cpf_cnpj: data.cpfCnpj,
+        inscricao_municipal: data.inscricaoMunicipal,
+        inscricao_estadual: data.inscricaoEstadual,
+        telefone: data.telefone,
+        pais: data.pais,
+        uf: data.uf,
+        cidade: data.cidade,
+        cidade_ibge_id: data.cidade_ibge_id,
+        logradouro: data.logradouro,
+        numero: data.numero,
+        complemento: data.complemento,
+        bairro: data.bairro,
+        cep: data.cep,
+        owner_id: user.id,
+      })
+
+      if (error) throw error
+
       toast.success("Cliente cadastrado com sucesso!")
+      navigate("/dashboard")
     } catch (error) {
       toast.error("Erro ao cadastrar cliente")
+      console.error(error)
     }
   }
 
@@ -121,278 +88,8 @@ export function ClientRegistrationForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <FormField
-            control={form.control}
-            name="tipoPessoa"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Tipo de Pessoa</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione o tipo de pessoa" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="PF">Pessoa Física</SelectItem>
-                    <SelectItem value="PJ">Pessoa Jurídica</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="nome"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nome</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input type="email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="cpfCnpj"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>CPF/CNPJ</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="inscricaoMunicipal"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Inscrição Municipal</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="inscricaoEstadual"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Inscrição Estadual</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="telefone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Telefone</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="cep"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>CEP</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    maxLength={8}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="pais"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>País</FormLabel>
-                <FormControl>
-                  <Input {...field} disabled />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="uf"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>UF</FormLabel>
-                <Select
-                  onValueChange={(value) => {
-                    field.onChange(value)
-                    setSelectedState(value)
-                  }}
-                  value={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione o estado" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {states.map((state) => (
-                      <SelectItem key={state.id} value={state.sigla}>
-                        {state.nome}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="cidade"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Cidade</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  value={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione a cidade" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {cities.map((city) => (
-                      <SelectItem key={city.id} value={city.nome}>
-                        {city.nome}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="logradouro"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Logradouro</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="numero"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Número</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="complemento"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Complemento</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="bairro"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Bairro</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <PersonalFields form={form} />
+          <AddressFields form={form} />
         </div>
 
         <Button type="submit" className="w-full">
