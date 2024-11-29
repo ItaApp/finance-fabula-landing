@@ -90,7 +90,7 @@ const Dashboard = () => {
 
         <div className="flex-1">
           <Header />
-          <div className="bg-background p-6">
+          <div className="container mx-auto bg-background p-6">
             {/* Header */}
             <div className="mb-8">
               <h1 className="text-3xl font-bold text-foreground">
