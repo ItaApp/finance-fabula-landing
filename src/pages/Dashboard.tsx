@@ -37,8 +37,8 @@ const data = [
 
 const Dashboard = () => {
   return (
-    <SidebarProvider defaultOpen>
-      <div className="flex min-h-screen">
+    <SidebarProvider>
+      <div className="flex min-h-screen w-full">
         <Sidebar>
           <SidebarHeader className="border-b border-border/5">
             <div className="flex h-[60px] items-center px-6">
@@ -90,7 +90,7 @@ const Dashboard = () => {
 
         <div className="flex-1">
           <Header />
-          <div className="container mx-auto bg-background p-6">
+          <div className="mx-auto max-w-[1200px] w-full px-4 py-6">
             {/* Header */}
             <div className="mb-8">
               <h1 className="text-3xl font-bold text-foreground">
@@ -101,7 +101,6 @@ const Dashboard = () => {
               </p>
             </div>
 
-            {/* Cards Grid */}
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
             <Card className="p-6">
               <div className="flex items-center justify-between">

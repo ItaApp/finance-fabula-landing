@@ -15,8 +15,8 @@ import { ClientRegistrationForm } from "@/components/ClientRegistrationForm";
 
 const Client = () => {
   return (
-    <SidebarProvider defaultOpen>
-      <div className="flex min-h-screen">
+    <SidebarProvider>
+      <div className="flex min-h-screen w-full">
         <Sidebar>
           <SidebarHeader className="border-b border-border/5">
             <div className="flex h-[60px] items-center px-6">
@@ -68,7 +68,7 @@ const Client = () => {
 
         <div className="flex-1">
           <Header />
-          <div className="container mx-auto bg-background p-6">
+          <div className="mx-auto max-w-[1200px] w-full px-4 py-6">
             <div className="mb-8">
               <h1 className="text-3xl font-bold text-foreground">Cadastro de Cliente</h1>
               <p className="text-muted-foreground">Preencha os dados do cliente</p>
