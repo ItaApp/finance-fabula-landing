@@ -180,67 +180,154 @@ export type Database = {
       }
       suppliers: {
         Row: {
+          agencia: string | null
           bairro: string
+          banco: string | null
+          categoria: string | null
           cep: string
+          chave_pix: string | null
           cidade: string
           cidade_ibge_id: number
           complemento: string | null
+          condicoes_pagamento: string | null
+          conta: string | null
+          contrato_url: string | null
           cpf_cnpj: string
           created_at: string
           email: string
+          email_financeiro: string | null
+          endereco_correspondencia_bairro: string | null
+          endereco_correspondencia_cep: string | null
+          endereco_correspondencia_cidade: string | null
+          endereco_correspondencia_complemento: string | null
+          endereco_correspondencia_logradouro: string | null
+          endereco_correspondencia_numero: string | null
+          endereco_correspondencia_pais: string | null
+          endereco_correspondencia_uf: string | null
           id: string
           inscricao_estadual: string | null
           inscricao_municipal: string | null
+          isento_ie: boolean | null
+          limite_credito: number | null
           logradouro: string
           nome: string
+          nome_fantasia: string | null
           numero: string
           owner_id: string
           pais: string
+          prazo_entrega: string | null
+          produtos_servicos: string | null
+          ramo_atividade: string | null
+          responsavel_funcao: string | null
+          responsavel_nome: string | null
           telefone: string
+          telefone_fixo: string | null
+          tipo_conta: string | null
           tipo_pessoa: string
+          titular_conta: string | null
           uf: string
+          website: string | null
+          whatsapp: string | null
         }
         Insert: {
+          agencia?: string | null
           bairro: string
+          banco?: string | null
+          categoria?: string | null
           cep: string
+          chave_pix?: string | null
           cidade: string
           cidade_ibge_id: number
           complemento?: string | null
+          condicoes_pagamento?: string | null
+          conta?: string | null
+          contrato_url?: string | null
           cpf_cnpj: string
           created_at?: string
           email: string
+          email_financeiro?: string | null
+          endereco_correspondencia_bairro?: string | null
+          endereco_correspondencia_cep?: string | null
+          endereco_correspondencia_cidade?: string | null
+          endereco_correspondencia_complemento?: string | null
+          endereco_correspondencia_logradouro?: string | null
+          endereco_correspondencia_numero?: string | null
+          endereco_correspondencia_pais?: string | null
+          endereco_correspondencia_uf?: string | null
           id?: string
           inscricao_estadual?: string | null
           inscricao_municipal?: string | null
+          isento_ie?: boolean | null
+          limite_credito?: number | null
           logradouro: string
           nome: string
+          nome_fantasia?: string | null
           numero: string
           owner_id: string
           pais: string
+          prazo_entrega?: string | null
+          produtos_servicos?: string | null
+          ramo_atividade?: string | null
+          responsavel_funcao?: string | null
+          responsavel_nome?: string | null
           telefone: string
+          telefone_fixo?: string | null
+          tipo_conta?: string | null
           tipo_pessoa: string
+          titular_conta?: string | null
           uf: string
+          website?: string | null
+          whatsapp?: string | null
         }
         Update: {
+          agencia?: string | null
           bairro?: string
+          banco?: string | null
+          categoria?: string | null
           cep?: string
+          chave_pix?: string | null
           cidade?: string
           cidade_ibge_id?: number
           complemento?: string | null
+          condicoes_pagamento?: string | null
+          conta?: string | null
+          contrato_url?: string | null
           cpf_cnpj?: string
           created_at?: string
           email?: string
+          email_financeiro?: string | null
+          endereco_correspondencia_bairro?: string | null
+          endereco_correspondencia_cep?: string | null
+          endereco_correspondencia_cidade?: string | null
+          endereco_correspondencia_complemento?: string | null
+          endereco_correspondencia_logradouro?: string | null
+          endereco_correspondencia_numero?: string | null
+          endereco_correspondencia_pais?: string | null
+          endereco_correspondencia_uf?: string | null
           id?: string
           inscricao_estadual?: string | null
           inscricao_municipal?: string | null
+          isento_ie?: boolean | null
+          limite_credito?: number | null
           logradouro?: string
           nome?: string
+          nome_fantasia?: string | null
           numero?: string
           owner_id?: string
           pais?: string
+          prazo_entrega?: string | null
+          produtos_servicos?: string | null
+          ramo_atividade?: string | null
+          responsavel_funcao?: string | null
+          responsavel_nome?: string | null
           telefone?: string
+          telefone_fixo?: string | null
+          tipo_conta?: string | null
           tipo_pessoa?: string
+          titular_conta?: string | null
           uf?: string
+          website?: string | null
+          whatsapp?: string | null
         }
         Relationships: [
           {
