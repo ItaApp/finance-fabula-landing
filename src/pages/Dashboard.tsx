@@ -93,12 +93,16 @@ const Dashboard = () => {
           <div className="bg-background p-6">
             {/* Header */}
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground">Painel Financeiro</h1>
-              <p className="text-muted-foreground">Bem-vindo! Aqui está sua visão geral financeira</p>
+              <h1 className="text-3xl font-bold text-foreground">
+                Painel Financeiro
+              </h1>
+              <p className="text-muted-foreground">
+                Bem-vindo! Aqui está sua visão geral financeira
+              </p>
             </div>
 
             {/* Cards Grid */}
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
             <Card className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -162,8 +166,7 @@ const Dashboard = () => {
             </div>
           </div>
         </Card>
-
-          </div>
+            </div>
 
             {/* Chart Section */}
             <Card className="p-6 mb-8">
@@ -202,8 +205,7 @@ const Dashboard = () => {
             </Card>
 
             {/* Recent Transactions */}
-          <Card className="p-6">
-            <h3 className="text-lg font-semibold mb-4">Transações Recentes</h3>
+            <Card className="p-6">
             <ScrollArea className="h-[300px] w-full">
           {[...Array(10)].map((_, i) => (
             <div
@@ -233,7 +235,7 @@ const Dashboard = () => {
             </div>
           ))}
             </ScrollArea>
-          </Card>
+            </Card>
           </div>
         </div>
       </div>
