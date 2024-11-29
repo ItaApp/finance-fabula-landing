@@ -9,6 +9,126 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      accounts_payable: {
+        Row: {
+          amount: number
+          created_at: string
+          description: string
+          document_number: string | null
+          due_date: string
+          id: string
+          notes: string | null
+          owner_id: string
+          payment_date: string | null
+          payment_method: string | null
+          status: string
+          supplier_id: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          description: string
+          document_number?: string | null
+          due_date: string
+          id?: string
+          notes?: string | null
+          owner_id: string
+          payment_date?: string | null
+          payment_method?: string | null
+          status?: string
+          supplier_id?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          description?: string
+          document_number?: string | null
+          due_date?: string
+          id?: string
+          notes?: string | null
+          owner_id?: string
+          payment_date?: string | null
+          payment_method?: string | null
+          status?: string
+          supplier_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "accounts_payable_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_payable_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      accounts_receivable: {
+        Row: {
+          amount: number
+          client_id: string | null
+          created_at: string
+          description: string
+          document_number: string | null
+          due_date: string
+          id: string
+          notes: string | null
+          owner_id: string
+          payment_date: string | null
+          payment_method: string | null
+          status: string
+        }
+        Insert: {
+          amount: number
+          client_id?: string | null
+          created_at?: string
+          description: string
+          document_number?: string | null
+          due_date: string
+          id?: string
+          notes?: string | null
+          owner_id: string
+          payment_date?: string | null
+          payment_method?: string | null
+          status?: string
+        }
+        Update: {
+          amount?: number
+          client_id?: string | null
+          created_at?: string
+          description?: string
+          document_number?: string | null
+          due_date?: string
+          id?: string
+          notes?: string | null
+          owner_id?: string
+          payment_date?: string | null
+          payment_method?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "accounts_receivable_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_receivable_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       clients: {
         Row: {
           bairro: string
