@@ -14,6 +14,7 @@ import { Send } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
+import { emitFiscalNote } from "@/services/focusNFE";
 
 interface FiscalNote {
   id: string;
@@ -77,19 +78,8 @@ export function FiscalNotesList({ notes }: FiscalNotesListProps) {
 
       if (updateError) throw updateError;
 
-      // Chama a API de emissão
-      const response = await fetch("/api/focus-nfe/emit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ noteId }),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message);
-      }
+      // Chama o serviço de emissão
+      await emitFiscalNote(noteId);
 
       // Atualiza a lista de notas
       queryClient.invalidateQueries({ queryKey: ["fiscal-notes"] });

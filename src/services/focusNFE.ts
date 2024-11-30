@@ -1,4 +1,3 @@
-import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/integrations/supabase/client";
 
 interface FiscalNote {
@@ -106,18 +105,8 @@ const buildFocusNFEPayload = (note: FiscalNote): FocusNFEPayload => ({
 
 const focusNfeApiKey = 'edeane3fvShDuQwbYrRditABSB2buvrU';
 
-export async function POST(request: NextRequest) {
+export const emitFiscalNote = async (noteId: string) => {
   try {
-    const body = await request.json();
-    const { noteId } = body;
-
-    if (!noteId) {
-      return NextResponse.json(
-        { message: "ID da nota fiscal não fornecido" },
-        { status: 400 }
-      );
-    }
-
     const note = await getFiscalNote(noteId);
     const payload = buildFocusNFEPayload(note);
 
@@ -145,15 +134,9 @@ export async function POST(request: NextRequest) {
 
     if (updateError) throw updateError;
 
-    return NextResponse.json(
-      { message: "Nota fiscal enviada com sucesso" },
-      { status: 200 }
-    );
+    return { message: "Nota fiscal enviada com sucesso" };
   } catch (error: any) {
     console.error("Erro ao emitir nota fiscal:", error);
-    return NextResponse.json(
-      { message: error.message || "Erro interno do servidor" },
-      { status: 500 }
-    );
+    throw new Error(error.message || "Erro interno do servidor");
   }
-}
+};
