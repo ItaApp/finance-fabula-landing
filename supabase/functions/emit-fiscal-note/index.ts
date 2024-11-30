@@ -18,21 +18,24 @@ serve(async (req) => {
       throw new Error('NFE_API_KEY environment variable is not set')
     }
 
+    console.log('Emitting fiscal note:', { noteId, payload })
+
     const response = await fetch(
       `https://homologacao.focusnfe.com.br/v2/nfse?ref=${noteId}`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Basic ${btoa(focusNfeApiKey + ':')}`,
+          "Authorization": `Basic ${btoa(focusNfeApiKey + ':')}`
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(payload)
       }
     )
 
     const data = await response.json()
     
     if (!response.ok) {
+      console.error('Focus NFE API error:', data)
       throw new Error(data.message || "Erro ao emitir nota fiscal")
     }
 

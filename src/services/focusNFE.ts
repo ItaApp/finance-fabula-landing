@@ -100,11 +100,22 @@ export const emitFiscalNote = async (noteId: string) => {
     const note = await getFiscalNote(noteId);
     const payload = buildFocusNFEPayload(note);
 
+    console.log('Calling emit-fiscal-note function with:', { noteId, payload });
+
     const { data, error } = await supabase.functions.invoke('emit-fiscal-note', {
       body: { noteId, payload }
     });
 
-    if (error) throw error;
+    if (error) {
+      console.error('Error from emit-fiscal-note function:', error);
+      throw error;
+    }
+
+    if (!data) {
+      throw new Error('No data received from emit-fiscal-note function');
+    }
+
+    console.log('Response from emit-fiscal-note function:', data);
 
     const { error: updateError } = await supabase
       .from("fiscal_notes")
