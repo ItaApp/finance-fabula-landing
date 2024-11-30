@@ -4,6 +4,7 @@ import { Auth as SupabaseAuth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -22,10 +23,10 @@ const Auth = () => {
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold">Finance Fabula</CardTitle>
           <CardDescription>
-            Entre com sua conta ou crie uma nova para continuar
+            Entre com sua conta para continuar
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-4">
           <SupabaseAuth
             supabaseClient={supabase}
             appearance={{
@@ -44,8 +45,6 @@ const Auth = () => {
                 input: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm',
                 button: 'w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black',
                 anchor: 'text-sm font-medium text-black hover:text-gray-800',
-                divider: 'my-4',
-                message: 'text-sm text-gray-600',
               },
             }}
             localization={{
@@ -54,42 +53,22 @@ const Auth = () => {
                   email_label: 'Email',
                   password_label: 'Senha',
                   button_label: 'Entrar',
-                  link_text: 'Já tem uma conta? Entre aqui',
-                },
-                sign_up: {
-                  email_label: 'Email',
-                  password_label: 'Senha',
-                  button_label: 'Cadastrar',
-                  link_text: 'Não tem uma conta? Cadastre-se',
-                  confirmation_text: '',
                 },
               },
             }}
             providers={[]}
-            view="sign_up"
-            showLinks={true}
-            additionalData={{
-              name: {
-                label: 'Nome completo',
-                type: 'text',
-                required: true,
-              },
-              cpf: {
-                label: 'CPF',
-                type: 'text',
-                required: true,
-                pattern: '[0-9]{11}',
-                title: 'Digite apenas os números do CPF',
-              },
-              whatsapp: {
-                label: 'WhatsApp',
-                type: 'tel',
-                required: true,
-                pattern: '[0-9]{11}',
-                title: 'Digite apenas os números com DDD',
-              },
-            }}
           />
+          <div className="text-center">
+            <p className="text-sm text-gray-600">
+              Não tem uma conta?{" "}
+              <button
+                onClick={() => navigate("/register")}
+                className="text-primary hover:underline font-medium"
+              >
+                Cadastre-se
+              </button>
+            </p>
+          </div>
         </CardContent>
       </Card>
     </div>
