@@ -40,10 +40,10 @@ export const CompanyForm = ({ initialData }: CompanyFormProps) => {
 
       const { data, error } = await supabase
         .from("companies")
-        .upsert({
+        .upsert([{
           ...values,
           owner_id: session.user.id,
-        })
+        }])
         .select()
         .single();
 
