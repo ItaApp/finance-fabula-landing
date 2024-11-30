@@ -1,5 +1,4 @@
 import { createClient } from '@supabase/supabase-js';
-import { Response } from '@supabase/supabase-js';
 
 const focusNfeApiKey = process.env.NFE_API_KEY;
 const supabaseUrl = process.env.SUPABASE_URL;
