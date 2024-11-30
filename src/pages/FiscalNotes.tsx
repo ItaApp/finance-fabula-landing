@@ -7,6 +7,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Plus } from "lucide-react";
 import { FiscalNoteForm } from "@/components/fiscal-notes/FiscalNoteForm";
 import { FiscalNotesList } from "@/components/fiscal-notes/FiscalNotesList";
+import { AppSidebar } from "@/components/shared/AppSidebar";
+import Header from "@/components/Header";
 
 export default function FiscalNotes() {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -34,29 +36,35 @@ export default function FiscalNotes() {
   });
 
   return (
-    <div className="container mx-auto py-6 space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Notas Fiscais</h1>
-        <Button onClick={() => setIsFormOpen(true)}>
-          <Plus className="mr-2" />
-          Nova Nota Fiscal
-        </Button>
+    <div className="flex h-screen bg-background">
+      <AppSidebar />
+      <div className="flex-1">
+        <Header />
+        <div className="container mx-auto py-6 space-y-6">
+          <div className="flex justify-between items-center">
+            <h1 className="text-3xl font-bold">Notas Fiscais</h1>
+            <Button onClick={() => setIsFormOpen(true)}>
+              <Plus className="mr-2" />
+              Nova Nota Fiscal
+            </Button>
+          </div>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Notas Fiscais Emitidas</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {isLoading ? (
+                <div>Carregando...</div>
+              ) : (
+                <FiscalNotesList notes={fiscalNotes || []} />
+              )}
+            </CardContent>
+          </Card>
+
+          <FiscalNoteForm open={isFormOpen} onOpenChange={setIsFormOpen} />
+        </div>
       </div>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Notas Fiscais Emitidas</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {isLoading ? (
-            <div>Carregando...</div>
-          ) : (
-            <FiscalNotesList notes={fiscalNotes || []} />
-          )}
-        </CardContent>
-      </Card>
-
-      <FiscalNoteForm open={isFormOpen} onOpenChange={setIsFormOpen} />
     </div>
   );
 }
