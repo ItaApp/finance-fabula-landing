@@ -41,7 +41,17 @@ export const CompanyForm = ({ initialData }: CompanyFormProps) => {
       const { data, error } = await supabase
         .from("companies")
         .upsert({
-          ...values,
+          nome: values.nome,
+          cnpj: values.cnpj,
+          email: values.email,
+          phone: values.phone,
+          address: values.address,
+          city: values.city,
+          state: values.state,
+          zip_code: values.zip_code,
+          inscricao_municipal: values.inscricao_municipal,
+          inscricao_estadual: values.inscricao_estadual,
+          regime_tributario: values.regime_tributario,
           owner_id: session.user.id,
         })
         .select()
