@@ -286,18 +286,29 @@ export type Database = {
         Row: {
           address: string | null
           ambiente: string | null
+          bairro: string | null
           certificado_password: string | null
           certificado_path: string | null
           city: string | null
           cnpj: string
+          complemento: string | null
           created_at: string
+          csc_nfce_producao: string | null
+          discrimina_impostos: boolean | null
           email: string | null
+          enviar_email_destinatario: boolean | null
+          habilita_nfce: boolean | null
+          habilita_nfe: boolean | null
           id: string
+          id_token_nfce_producao: string | null
           inscricao_estadual: string | null
           inscricao_municipal: string | null
           integranotas_id: string | null
           is_active: boolean | null
-          name: string
+          logradouro: string | null
+          nome: string
+          nome_fantasia: string | null
+          numero: string | null
           owner_id: string
           phone: string | null
           regime_tributario: string | null
@@ -307,18 +318,29 @@ export type Database = {
         Insert: {
           address?: string | null
           ambiente?: string | null
+          bairro?: string | null
           certificado_password?: string | null
           certificado_path?: string | null
           city?: string | null
           cnpj: string
+          complemento?: string | null
           created_at?: string
+          csc_nfce_producao?: string | null
+          discrimina_impostos?: boolean | null
           email?: string | null
+          enviar_email_destinatario?: boolean | null
+          habilita_nfce?: boolean | null
+          habilita_nfe?: boolean | null
           id?: string
+          id_token_nfce_producao?: string | null
           inscricao_estadual?: string | null
           inscricao_municipal?: string | null
           integranotas_id?: string | null
           is_active?: boolean | null
-          name: string
+          logradouro?: string | null
+          nome: string
+          nome_fantasia?: string | null
+          numero?: string | null
           owner_id: string
           phone?: string | null
           regime_tributario?: string | null
@@ -328,18 +350,29 @@ export type Database = {
         Update: {
           address?: string | null
           ambiente?: string | null
+          bairro?: string | null
           certificado_password?: string | null
           certificado_path?: string | null
           city?: string | null
           cnpj?: string
+          complemento?: string | null
           created_at?: string
+          csc_nfce_producao?: string | null
+          discrimina_impostos?: boolean | null
           email?: string | null
+          enviar_email_destinatario?: boolean | null
+          habilita_nfce?: boolean | null
+          habilita_nfe?: boolean | null
           id?: string
+          id_token_nfce_producao?: string | null
           inscricao_estadual?: string | null
           inscricao_municipal?: string | null
           integranotas_id?: string | null
           is_active?: boolean | null
-          name?: string
+          logradouro?: string | null
+          nome?: string
+          nome_fantasia?: string | null
+          numero?: string | null
           owner_id?: string
           phone?: string | null
           regime_tributario?: string | null
