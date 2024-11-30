@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
 import { useUser } from "@supabase/auth-helpers-react"
-import { FileText, User, DollarSign, Database, CheckSquare, UploadCloud } from "lucide-react"
+import { FileText, User, DollarSign, Database } from "lucide-react"
 
 import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
