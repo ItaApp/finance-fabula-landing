@@ -99,6 +99,7 @@ export function FiscalNotesList({ notes }: FiscalNotesListProps) {
         description: "Você será notificado quando o processo for concluído.",
       });
     } catch (error: any) {
+      console.error("Error emitting note:", error);
       toast({
         variant: "destructive",
         title: "Erro ao emitir nota fiscal",
