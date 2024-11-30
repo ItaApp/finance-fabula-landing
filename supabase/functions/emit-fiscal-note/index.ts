@@ -21,31 +21,33 @@ serve(async (req) => {
     console.log('Emitting fiscal note:', { noteId, payload })
 
     const authString = btoa(`${focusNfeApiKey}:`)
+    const apiUrl = `https://homologacao.focusnfe.com.br/v2/nfse?ref=${noteId}`
 
-    const response = await fetch(
-      `https://homologacao.focusnfe.com.br/v2/nfse?ref=${noteId}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Basic ${authString}`
-        },
-        body: JSON.stringify(payload)
-      }
-    )
+    console.log('Calling Focus NFE API:', apiUrl)
+
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Basic ${authString}`
+      },
+      body: JSON.stringify(payload)
+    })
+
+    const responseText = await response.text()
+    console.log('Focus NFE API raw response:', responseText)
 
     let data
-    const responseText = await response.text()
     try {
       data = JSON.parse(responseText)
     } catch (e) {
-      console.error('Failed to parse response:', responseText)
-      throw new Error('Invalid response from Focus NFE API')
+      console.error('Failed to parse Focus NFE API response:', e)
+      throw new Error(`Invalid JSON response from Focus NFE API: ${responseText}`)
     }
-    
+
     if (!response.ok) {
-      console.error('Focus NFE API error:', data)
-      throw new Error(data.message || "Erro ao emitir nota fiscal")
+      console.error('Focus NFE API error response:', data)
+      throw new Error(data.message || "Error from Focus NFE API")
     }
 
     return new Response(
@@ -58,7 +60,10 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in emit-fiscal-note:', error)
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: error.message,
+        details: error.stack
+      }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 400 
