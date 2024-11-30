@@ -15,8 +15,7 @@ interface DateFieldsProps {
 
 export function DateFields({ form }: DateFieldsProps) {
   return (
-    <div className="space-y-4">
-      <h3 className="text-sm font-medium">Datas</h3>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <FormField
         control={form.control}
         name="issueDate"
