@@ -38,6 +38,12 @@ const Auth = () => {
                   },
                 },
               },
+              className: {
+                container: 'flex flex-col gap-4',
+                label: 'block text-sm font-medium text-gray-700',
+                input: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm',
+                button: 'w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black',
+              },
             }}
             localization={{
               variables: {
@@ -66,11 +72,15 @@ const Auth = () => {
                 label: 'CPF',
                 type: 'text',
                 required: true,
+                pattern: '[0-9]{11}',
+                title: 'Digite apenas os números do CPF',
               },
               whatsapp: {
                 label: 'WhatsApp',
                 type: 'tel',
                 required: true,
+                pattern: '[0-9]{11}',
+                title: 'Digite apenas os números com DDD',
               },
             }}
           />
