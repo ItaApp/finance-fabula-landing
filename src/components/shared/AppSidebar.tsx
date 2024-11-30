@@ -8,7 +8,7 @@ import {
   SidebarMenuButton,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Home, User, Truck, DollarSign, FileText, Settings } from "lucide-react";
+import { Home, User, Truck, DollarSign, Settings } from "lucide-react";
 
 export function AppSidebar() {
   const navigate = useNavigate();
@@ -45,12 +45,6 @@ export function AppSidebar() {
             <SidebarMenuButton tooltip="Financeiro" onClick={() => navigate("/financial")}>
               <DollarSign className="h-4 w-4" />
               <span>Financeiro</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton tooltip="Nota NFS-e" onClick={() => navigate("/fiscal-notes")}>
-              <FileText className="h-4 w-4" />
-              <span>Nota NFS-e</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
