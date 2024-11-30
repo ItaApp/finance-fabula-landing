@@ -1,16 +1,8 @@
 import { Card } from "@/components/ui/card";
 import Header from "@/components/Header";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
-import { Home, User, Truck, DollarSign, FileText, Settings, UserPlus, Users } from "lucide-react";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/shared/AppSidebar";
+import { UserPlus, Users } from "lucide-react";
 import { ClientRegistrationForm } from "@/components/ClientRegistrationForm";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -22,55 +14,7 @@ const Client = () => {
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full">
-        <Sidebar>
-          <SidebarHeader className="border-b border-border/5">
-            <div className="flex h-[60px] items-center px-6">
-              <SidebarTrigger />
-              <span className="ml-2 text-lg font-semibold">Sistema de Gestão</span>
-            </div>
-          </SidebarHeader>
-          <SidebarContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Início">
-                  <Home className="h-4 w-4" />
-                  <span>Início</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Cliente">
-                  <User className="h-4 w-4" />
-                  <span>Cliente</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Fornecedor">
-                  <Truck className="h-4 w-4" />
-                  <span>Fornecedor</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Financeiro">
-                  <DollarSign className="h-4 w-4" />
-                  <span>Financeiro</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Nota NFS-e">
-                  <FileText className="h-4 w-4" />
-                  <span>Nota NFS-e</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Configurações">
-                  <Settings className="h-4 w-4" />
-                  <span>Configurações</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarContent>
-        </Sidebar>
-
+        <AppSidebar />
         <div className="flex-1">
           <Header />
           <div className="mx-auto max-w-[1200px] w-full px-4 py-6">
