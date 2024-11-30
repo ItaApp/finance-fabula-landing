@@ -56,7 +56,15 @@ export function FiscalNoteForm({ open, onOpenChange }: FiscalNoteFormProps) {
       if (!user) throw new Error("Usuário não autenticado");
 
       const { error } = await supabase.from("fiscal_notes").insert({
-        ...data,
+        company_id: data.company_id,
+        client_id: data.client_id,
+        natureza_operacao: data.natureza_operacao,
+        tipo_documento: data.tipo_documento,
+        finalidade_emissao: data.finalidade_emissao,
+        local_destino: data.local_destino,
+        valor_total: data.valor_total,
+        base_calculo: data.base_calculo,
+        informacoes_adicionais: data.informacoes_adicionais,
         owner_id: user.id,
         status: 'draft'
       });
