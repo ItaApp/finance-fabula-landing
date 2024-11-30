@@ -10,27 +10,30 @@ import { CompanyForm } from "@/components/settings/CompanyForm";
 
 const Settings = () => {
   const navigate = useNavigate();
-  const { session } = useSessionContext();
+  const { session, isLoading: isLoadingSession } = useSessionContext();
 
   useEffect(() => {
-    if (!session) {
+    if (!session && !isLoadingSession) {
       navigate("/");
     }
-  }, [session, navigate]);
+  }, [session, isLoadingSession, navigate]);
 
-  // Fetch existing company data
+  // Only fetch company data if we have a valid session
   const { data: company, isLoading } = useQuery({
-    queryKey: ["company"],
+    queryKey: ["company", session?.user.id],
     queryFn: async () => {
+      if (!session?.user.id) throw new Error("No user ID");
+      
       const { data, error } = await supabase
         .from("companies")
         .select("*")
-        .eq("owner_id", session?.user.id)
+        .eq("owner_id", session.user.id)
         .single();
 
       if (error) throw error;
       return data;
     },
+    enabled: !!session?.user.id, // Only run query if we have a user ID
   });
 
   const handleSignOut = async () => {
@@ -42,6 +45,16 @@ const Settings = () => {
       toast.error("Erro ao realizar logout");
     }
   };
+
+  // Show loading state while session is being checked
+  if (isLoadingSession) {
+    return <div>Loading...</div>;
+  }
+
+  // Don't render anything if not authenticated
+  if (!session) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -59,7 +72,7 @@ const Settings = () => {
             <div className="border rounded-lg p-4">
               <h2 className="text-lg font-medium mb-2">Conta</h2>
               <p className="text-sm text-muted-foreground mb-4">
-                Email: {session?.user.email}
+                Email: {session.user.email}
               </p>
               <Button variant="destructive" onClick={handleSignOut}>
                 Sair da conta
@@ -68,7 +81,7 @@ const Settings = () => {
 
             <div className="border rounded-lg p-4">
               <h2 className="text-lg font-medium mb-4">Dados da Empresa</h2>
-              {session?.user.id && (
+              {session.user.id && (
                 <CompanyForm 
                   initialData={company} 
                   userId={session.user.id}
