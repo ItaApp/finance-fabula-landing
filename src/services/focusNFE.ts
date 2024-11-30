@@ -47,14 +47,6 @@ interface FocusNFEPayload {
   };
 }
 
-const handleFocusNFEResponse = async (response: Response) => {
-  const data = await response.json();
-  if (!response.ok) {
-    throw new Error(data.message || "Erro ao emitir nota fiscal");
-  }
-  return data;
-};
-
 const getFiscalNote = async (noteId: string): Promise<FiscalNote> => {
   const { data: note, error } = await supabase
     .from("fiscal_notes")
@@ -103,26 +95,29 @@ const buildFocusNFEPayload = (note: FiscalNote): FocusNFEPayload => ({
   },
 });
 
-const focusNfeApiKey = 'edeane3fvShDuQwbYrRditABSB2buvrU';
-
 export const emitFiscalNote = async (noteId: string) => {
   try {
     const note = await getFiscalNote(noteId);
     const payload = buildFocusNFEPayload(note);
 
-    const focusResponse = await fetch(
-      `https://homologacao.focusnfe.com.br/v2/nfse?ref=${noteId}`,
+    const response = await fetch(
+      `${process.env.SUPABASE_URL}/functions/v1/emit-fiscal-note`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Basic ${btoa(focusNfeApiKey + ':')}`,
+          "Authorization": `Bearer ${process.env.SUPABASE_ANON_KEY}`,
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ noteId, payload }),
       }
     );
 
-    const focusData = await handleFocusNFEResponse(focusResponse);
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Erro ao emitir nota fiscal");
+    }
+
+    const focusData = await response.json();
 
     const { error: updateError } = await supabase
       .from("fiscal_notes")
