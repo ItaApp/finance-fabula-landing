@@ -48,7 +48,7 @@ export function AppSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton tooltip="Nota NFS-e">
+            <SidebarMenuButton tooltip="Nota NFS-e" onClick={() => navigate("/fiscal-notes")}>
               <FileText className="h-4 w-4" />
               <span>Nota NFS-e</span>
             </SidebarMenuButton>
