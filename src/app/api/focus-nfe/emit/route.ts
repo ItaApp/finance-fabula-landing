@@ -122,7 +122,7 @@ export async function POST(request: NextRequest) {
     const payload = buildFocusNFEPayload(note);
 
     const focusResponse = await fetch(
-      `https://homologacao.focusnfe.com.br/v2/nfse?ref=${note.id}`,
+      `https://homologacao.focusnfe.com.br/v2/nfse?ref=${noteId}`,
       {
         method: "POST",
         headers: {
