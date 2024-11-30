@@ -4,6 +4,8 @@ export const accountsPayableSchema = z.object({
   description: z.string().min(1, "Descrição é obrigatória"),
   documentNumber: z.string().optional(),
   documentType: z.string().optional(),
+  documentUrl: z.string().optional(),
+  paymentProofUrl: z.string().optional(),
   supplierId: z.string().optional(),
   issueDate: z.date().optional(),
   originalDueDate: z.date().optional(),
