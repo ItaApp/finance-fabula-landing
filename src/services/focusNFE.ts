@@ -101,12 +101,12 @@ export const emitFiscalNote = async (noteId: string) => {
     const payload = buildFocusNFEPayload(note);
 
     const response = await fetch(
-      `${process.env.SUPABASE_URL}/functions/v1/emit-fiscal-note`,
+      `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/emit-fiscal-note`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${process.env.SUPABASE_ANON_KEY}`,
+          "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
         },
         body: JSON.stringify({ noteId, payload }),
       }
