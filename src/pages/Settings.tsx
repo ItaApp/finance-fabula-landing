@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CompanyForm } from "@/components/settings/CompanyForm";
+import { UserForm } from "@/components/settings/UserForm";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import {
@@ -21,6 +22,7 @@ import { Button } from "@/components/ui/button";
 
 const Settings = () => {
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<"company" | "user">("company");
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -126,11 +128,21 @@ const Settings = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-              <Button variant="outline" size="lg" className="h-24">
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="h-24"
+                onClick={() => setActiveTab("user")}
+              >
                 <User className="mr-2 h-5 w-5" />
                 Minhas informações
               </Button>
-              <Button variant="outline" size="lg" className="h-24">
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="h-24"
+                onClick={() => setActiveTab("company")}
+              >
                 <Building2 className="mr-2 h-5 w-5" />
                 Minha empresa
               </Button>
@@ -141,12 +153,16 @@ const Settings = () => {
                 <CardTitle>Configurações</CardTitle>
               </CardHeader>
               <CardContent>
-                <Tabs defaultValue="company" className="w-full">
+                <Tabs value={activeTab} onValueChange={(value: "company" | "user") => setActiveTab(value)}>
                   <TabsList>
                     <TabsTrigger value="company">Empresa</TabsTrigger>
+                    <TabsTrigger value="user">Usuário</TabsTrigger>
                   </TabsList>
                   <TabsContent value="company">
                     <CompanyForm initialData={company} />
+                  </TabsContent>
+                  <TabsContent value="user">
+                    <UserForm />
                   </TabsContent>
                 </Tabs>
               </CardContent>
