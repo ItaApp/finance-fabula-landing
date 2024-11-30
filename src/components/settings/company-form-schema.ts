@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const formSchema = z.object({
-  name: z.string().min(1, "Nome é obrigatório"),
+  nome: z.string().min(1, "Nome é obrigatório"),
   cnpj: z.string().min(1, "CNPJ é obrigatório"),
   email: z.string().email("Email inválido").optional().nullable(),
   phone: z.string().optional().nullable(),

@@ -18,7 +18,7 @@ export const CompanyFormFields = ({ form }: CompanyFormFieldsProps) => {
     <>
       <FormField
         control={form.control}
-        name="name"
+        name="nome"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Nome da Empresa</FormLabel>

@@ -19,7 +19,7 @@ export const CompanyForm = ({ initialData }: CompanyFormProps) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
-      name: "",
+      nome: "",
       cnpj: "",
       email: "",
       phone: "",
