@@ -14,6 +14,10 @@ serve(async (req) => {
     const { noteId, payload } = await req.json()
     const focusNfeApiKey = Deno.env.get('NFE_API_KEY')
 
+    if (!focusNfeApiKey) {
+      throw new Error('NFE_API_KEY environment variable is not set')
+    }
+
     const response = await fetch(
       `https://homologacao.focusnfe.com.br/v2/nfse?ref=${noteId}`,
       {
@@ -40,6 +44,7 @@ serve(async (req) => {
       },
     )
   } catch (error) {
+    console.error('Error in emit-fiscal-note:', error)
     return new Response(
       JSON.stringify({ error: error.message }),
       { 
