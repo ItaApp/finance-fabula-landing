@@ -12,7 +12,7 @@ serve(async (req) => {
 
   try {
     const { noteId, payload } = await req.json()
-    const focusNfeApiKey = Deno.env.get('NFE_API_KEY')
+    const focusNfeApiKey = Deno.env.get('VITE_NFE_API_KEY')
 
     const response = await fetch(
       `https://homologacao.focusnfe.com.br/v2/nfse?ref=${noteId}`,
