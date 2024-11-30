@@ -116,7 +116,7 @@ export const emitFiscalNote = async (noteId: string) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Basic ${Buffer.from(focusNfeApiKey + ':').toString('base64')}`,
+          "Authorization": `Basic ${btoa(focusNfeApiKey + ':')}`,
         },
         body: JSON.stringify(payload),
       }
