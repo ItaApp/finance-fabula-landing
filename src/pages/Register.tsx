@@ -122,6 +122,43 @@ const Register = () => {
               />
             </div>
 
+            {/* WhatsApp and CPF in two columns */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label htmlFor="whatsapp" className="text-sm font-medium">
+                  WhatsApp
+                </label>
+                <Input
+                  id="whatsapp"
+                  name="whatsapp"
+                  type="tel"
+                  required
+                  value={formData.whatsapp}
+                  onChange={handleChange}
+                  className="w-full"
+                  placeholder="11999999999"
+                  maxLength={11}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label htmlFor="cpf" className="text-sm font-medium">
+                  CPF
+                </label>
+                <Input
+                  id="cpf"
+                  name="cpf"
+                  type="text"
+                  required
+                  value={formData.cpf}
+                  onChange={handleChange}
+                  className="w-full"
+                  placeholder="12345678900"
+                  maxLength={11}
+                />
+              </div>
+            </div>
+
             <div className="space-y-2">
               <label htmlFor="password" className="text-sm font-medium">
                 Senha
@@ -134,40 +171,6 @@ const Register = () => {
                 value={formData.password}
                 onChange={handleChange}
                 className="w-full"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="whatsapp" className="text-sm font-medium">
-                WhatsApp
-              </label>
-              <Input
-                id="whatsapp"
-                name="whatsapp"
-                type="tel"
-                required
-                value={formData.whatsapp}
-                onChange={handleChange}
-                className="w-full"
-                placeholder="11999999999"
-                maxLength={11}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="cpf" className="text-sm font-medium">
-                CPF
-              </label>
-              <Input
-                id="cpf"
-                name="cpf"
-                type="text"
-                required
-                value={formData.cpf}
-                onChange={handleChange}
-                className="w-full"
-                placeholder="12345678900"
-                maxLength={11}
               />
             </div>
 
