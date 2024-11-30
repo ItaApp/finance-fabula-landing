@@ -41,7 +41,39 @@ export const CompanyForm = ({ initialData }: CompanyFormProps) => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) throw new Error("Não autorizado");
 
-      // Salva no Supabase
+      // Integra com FocusNFE primeiro para obter o ID
+      const focusResponse = await fetch('/api/focus-nfe/company', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({ 
+          nome: values.nome,
+          cnpj: values.cnpj,
+          inscricao_municipal: values.inscricao_municipal,
+          inscricao_estadual: values.inscricao_estadual,
+          regime_tributario: values.regime_tributario,
+          endereco: {
+            logradouro: values.logradouro,
+            numero: values.numero,
+            complemento: values.complemento,
+            bairro: values.bairro,
+            cidade: values.city,
+            estado: values.state,
+            cep: values.zip_code,
+          }
+        }),
+      });
+
+      if (!focusResponse.ok) {
+        const error = await focusResponse.json();
+        throw new Error(`Erro ao integrar com FocusNFE: ${error.message}`);
+      }
+
+      const focusData = await focusResponse.json();
+
+      // Salva no Supabase com o ID retornado do Focus
       const { data: companyData, error } = await supabase
         .from("companies")
         .upsert({
@@ -60,26 +92,12 @@ export const CompanyForm = ({ initialData }: CompanyFormProps) => {
           inscricao_estadual: values.inscricao_estadual,
           regime_tributario: values.regime_tributario,
           owner_id: session.user.id,
+          integranotas_id: focusData.id, // Salva o ID retornado do Focus
         })
         .select()
         .single();
 
       if (error) throw error;
-
-      // Integra com FocusNFE
-      const focusResponse = await fetch('/functions/v1/focus-nfe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`,
-        },
-        body: JSON.stringify({ data: values }),
-      });
-
-      if (!focusResponse.ok) {
-        const error = await focusResponse.json();
-        throw new Error(`Erro ao integrar com FocusNFE: ${error.message}`);
-      }
 
       return companyData;
     },
@@ -87,7 +105,7 @@ export const CompanyForm = ({ initialData }: CompanyFormProps) => {
       queryClient.invalidateQueries({ queryKey: ["company"] });
       toast({
         title: "Sucesso",
-        description: "Dados da empresa atualizados com sucesso",
+        description: "Dados da empresa atualizados com sucesso e integrados com FocusNFE",
       });
     },
     onError: (error) => {
