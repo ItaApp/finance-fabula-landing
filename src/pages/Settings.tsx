@@ -29,9 +29,9 @@ const Settings = () => {
         .from("companies")
         .select("*")
         .eq("owner_id", session.user.id)
-        .single();
+        .maybeSingle(); // Changed from .single() to .maybeSingle()
 
-      if (error) throw error;
+      if (error && error.code !== 'PGRST116') throw error;
       return data;
     },
   });
