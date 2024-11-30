@@ -1,4 +1,4 @@
-import { User, LifeBuoy, Bug, Settings, FileText } from "lucide-react";
+import { User, LifeBuoy, Bug, Settings } from "lucide-react";
 import { Button } from "./ui/button";
 import { useNavigate } from "react-router-dom";
 import {
@@ -19,10 +19,6 @@ const Header = () => {
         </div>
         <Button variant="ghost" onClick={() => navigate("/supplier")}>
           Fornecedor
-        </Button>
-        <Button variant="ghost" onClick={() => navigate("/fiscal-notes")}>
-          <FileText className="h-4 w-4 mr-2" />
-          Notas Fiscais
         </Button>
       </div>
       <div className="flex items-center gap-2">
