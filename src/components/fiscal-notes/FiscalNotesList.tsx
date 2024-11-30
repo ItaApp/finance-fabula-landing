@@ -32,11 +32,11 @@ export function FiscalNotesList({ notes }: FiscalNotesListProps) {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "draft":
-        return "default";
+        return "secondary";
       case "processing":
-        return "warning";
+        return "default";
       case "approved":
-        return "success";
+        return "outline";
       case "rejected":
         return "destructive";
       default:

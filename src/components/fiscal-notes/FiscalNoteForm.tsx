@@ -52,7 +52,14 @@ export function FiscalNoteForm({ open, onOpenChange }: FiscalNoteFormProps) {
   const onSubmit = async (data: FiscalNoteFormValues) => {
     setIsSubmitting(true);
     try {
-      const { error } = await supabase.from("fiscal_notes").insert([data]);
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Usuário não autenticado");
+
+      const { error } = await supabase.from("fiscal_notes").insert({
+        ...data,
+        owner_id: user.id,
+        status: 'draft'
+      });
 
       if (error) throw error;
 
