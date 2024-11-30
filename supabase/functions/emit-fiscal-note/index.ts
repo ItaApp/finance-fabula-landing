@@ -20,19 +20,28 @@ serve(async (req) => {
 
     console.log('Emitting fiscal note:', { noteId, payload })
 
+    const authString = btoa(`${focusNfeApiKey}:`)
+
     const response = await fetch(
       `https://homologacao.focusnfe.com.br/v2/nfse?ref=${noteId}`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Basic ${btoa(focusNfeApiKey + ':')}`
+          "Authorization": `Basic ${authString}`
         },
         body: JSON.stringify(payload)
       }
     )
 
-    const data = await response.json()
+    let data
+    const responseText = await response.text()
+    try {
+      data = JSON.parse(responseText)
+    } catch (e) {
+      console.error('Failed to parse response:', responseText)
+      throw new Error('Invalid response from Focus NFE API')
+    }
     
     if (!response.ok) {
       console.error('Focus NFE API error:', data)
