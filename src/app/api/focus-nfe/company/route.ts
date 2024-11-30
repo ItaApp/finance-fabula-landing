@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 
-const focusNfeApiKey = process.env.NFE_API_KEY;
+const focusNfeApiKey = 'edeane3fvShDuQwbYrRditABSB2buvrU';
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': focusNfeApiKey!
+        'Authorization': `Basic ${Buffer.from(focusNfeApiKey + ':').toString('base64')}`
       },
       body: JSON.stringify({
         cnpj: body.cnpj,

@@ -104,6 +104,8 @@ const buildFocusNFEPayload = (note: FiscalNote): FocusNFEPayload => ({
   },
 });
 
+const focusNfeApiKey = 'edeane3fvShDuQwbYrRditABSB2buvrU';
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -125,7 +127,7 @@ export async function POST(request: NextRequest) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.NFE_API_KEY}`,
+          "Authorization": `Basic ${Buffer.from(focusNfeApiKey + ':').toString('base64')}`,
         },
         body: JSON.stringify(payload),
       }
