@@ -88,7 +88,6 @@ const App = () => (
               </ProtectedRoute>
             }
           />
-          {/* Add a catch-all route to redirect to dashboard if no match is found */}
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </BrowserRouter>
