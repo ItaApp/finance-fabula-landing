@@ -389,6 +389,133 @@ export type Database = {
           },
         ]
       }
+      fiscal_notes: {
+        Row: {
+          base_calculo: number | null
+          base_calculo_st: number | null
+          client_id: string
+          company_id: string
+          created_at: string | null
+          data_emissao: string | null
+          finalidade_emissao: string
+          focus_nfe_id: string | null
+          focus_nfe_message: string | null
+          focus_nfe_status: string | null
+          id: string
+          informacoes_adicionais: string | null
+          local_destino: string
+          natureza_operacao: string
+          numero_nota: string | null
+          owner_id: string
+          serie: string | null
+          status: string | null
+          tipo_documento: string
+          valor_cofins: number | null
+          valor_desconto: number | null
+          valor_frete: number | null
+          valor_icms: number | null
+          valor_icms_desonerado: number | null
+          valor_icms_st: number | null
+          valor_outras_despesas: number | null
+          valor_pis: number | null
+          valor_seguro: number | null
+          valor_total: number | null
+          valor_total_ipi: number | null
+          valor_total_nota: number | null
+          valor_total_produtos: number | null
+        }
+        Insert: {
+          base_calculo?: number | null
+          base_calculo_st?: number | null
+          client_id: string
+          company_id: string
+          created_at?: string | null
+          data_emissao?: string | null
+          finalidade_emissao: string
+          focus_nfe_id?: string | null
+          focus_nfe_message?: string | null
+          focus_nfe_status?: string | null
+          id?: string
+          informacoes_adicionais?: string | null
+          local_destino: string
+          natureza_operacao: string
+          numero_nota?: string | null
+          owner_id: string
+          serie?: string | null
+          status?: string | null
+          tipo_documento: string
+          valor_cofins?: number | null
+          valor_desconto?: number | null
+          valor_frete?: number | null
+          valor_icms?: number | null
+          valor_icms_desonerado?: number | null
+          valor_icms_st?: number | null
+          valor_outras_despesas?: number | null
+          valor_pis?: number | null
+          valor_seguro?: number | null
+          valor_total?: number | null
+          valor_total_ipi?: number | null
+          valor_total_nota?: number | null
+          valor_total_produtos?: number | null
+        }
+        Update: {
+          base_calculo?: number | null
+          base_calculo_st?: number | null
+          client_id?: string
+          company_id?: string
+          created_at?: string | null
+          data_emissao?: string | null
+          finalidade_emissao?: string
+          focus_nfe_id?: string | null
+          focus_nfe_message?: string | null
+          focus_nfe_status?: string | null
+          id?: string
+          informacoes_adicionais?: string | null
+          local_destino?: string
+          natureza_operacao?: string
+          numero_nota?: string | null
+          owner_id?: string
+          serie?: string | null
+          status?: string | null
+          tipo_documento?: string
+          valor_cofins?: number | null
+          valor_desconto?: number | null
+          valor_frete?: number | null
+          valor_icms?: number | null
+          valor_icms_desonerado?: number | null
+          valor_icms_st?: number | null
+          valor_outras_despesas?: number | null
+          valor_pis?: number | null
+          valor_seguro?: number | null
+          valor_total?: number | null
+          valor_total_ipi?: number | null
+          valor_total_nota?: number | null
+          valor_total_produtos?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fiscal_notes_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fiscal_notes_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fiscal_notes_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null

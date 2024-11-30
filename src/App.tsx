@@ -14,6 +14,7 @@ import Client from "./pages/Client";
 import Supplier from "./pages/Supplier";
 import Financial from "./pages/Financial";
 import Settings from "./pages/Settings";
+import FiscalNotes from "./pages/FiscalNotes";
 
 const queryClient = new QueryClient();
 
@@ -85,6 +86,14 @@ const App = () => (
             element={
               <ProtectedRoute>
                 <Settings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/fiscal-notes"
+            element={
+              <ProtectedRoute>
+                <FiscalNotes />
               </ProtectedRoute>
             }
           />
