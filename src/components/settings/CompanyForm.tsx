@@ -38,15 +38,12 @@ export const CompanyForm = ({ initialData }: CompanyFormProps) => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) throw new Error("Não autorizado");
 
-      // Ensure all required fields are present in the upsert
-      const upsertData = {
-        ...values,
-        owner_id: session.user.id,
-      };
-
       const { data, error } = await supabase
         .from("companies")
-        .upsert(upsertData)
+        .upsert({
+          ...values,
+          owner_id: session.user.id,
+        })
         .select()
         .single();
 
