@@ -391,18 +391,21 @@ export type Database = {
       }
       profiles: {
         Row: {
+          cpf: string | null
           created_at: string
           id: string
           name: string | null
           whatsapp: string | null
         }
         Insert: {
+          cpf?: string | null
           created_at?: string
           id: string
           name?: string | null
           whatsapp?: string | null
         }
         Update: {
+          cpf?: string | null
           created_at?: string
           id?: string
           name?: string | null

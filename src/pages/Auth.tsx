@@ -9,7 +9,6 @@ const Auth = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if user is already logged in
     supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
         navigate("/dashboard");
@@ -51,7 +50,27 @@ const Auth = () => {
                   email_label: 'Email',
                   password_label: 'Senha',
                   button_label: 'Cadastrar',
+                  confirmation_text: '',
                 },
+              },
+            }}
+            providers={[]}
+            view="sign_up"
+            additionalData={{
+              name: {
+                label: 'Nome completo',
+                type: 'text',
+                required: true,
+              },
+              cpf: {
+                label: 'CPF',
+                type: 'text',
+                required: true,
+              },
+              whatsapp: {
+                label: 'WhatsApp',
+                type: 'tel',
+                required: true,
               },
             }}
           />
