@@ -18,22 +18,26 @@ const Settings = () => {
     }
   }, [session, isLoadingSession, navigate]);
 
-  // Only fetch company data if we have a valid session
   const { data: company, isLoading } = useQuery({
-    queryKey: ["company", session?.user.id],
+    queryKey: ["company", session?.user?.id],
     queryFn: async () => {
-      if (!session?.user.id) throw new Error("No user ID");
-      
+      if (!session?.user?.id) {
+        throw new Error("No user ID");
+      }
+
       const { data, error } = await supabase
         .from("companies")
         .select("*")
         .eq("owner_id", session.user.id)
         .single();
 
-      if (error) throw error;
+      if (error) {
+        throw error;
+      }
+
       return data;
     },
-    enabled: !!session?.user.id, // Only run query if we have a user ID
+    enabled: !!session?.user?.id,
   });
 
   const handleSignOut = async () => {
@@ -46,12 +50,14 @@ const Settings = () => {
     }
   };
 
-  // Show loading state while session is being checked
-  if (isLoadingSession) {
-    return <div>Loading...</div>;
+  if (isLoadingSession || isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-lg">Carregando...</div>
+      </div>
+    );
   }
 
-  // Don't render anything if not authenticated
   if (!session) {
     return null;
   }
