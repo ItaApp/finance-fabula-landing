@@ -7,7 +7,7 @@ import { AccountsPayableFormValues } from "./types"
 import { useState } from "react"
 import { supabase } from "@/integrations/supabase/client"
 import { toast } from "sonner"
-import { Loader2 } from "lucide-react"
+import { Loader2, FileText, Upload, AlignLeft } from "lucide-react"
 
 interface DocumentFieldsProps {
   form: UseFormReturn<AccountsPayableFormValues>
@@ -52,9 +52,12 @@ export function DocumentFields({ form }: DocumentFieldsProps) {
         name="documentNumber"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Número do Documento</FormLabel>
+            <FormLabel className="flex items-center gap-2">
+              <FileText className="h-4 w-4" />
+              Número do Documento
+            </FormLabel>
             <FormControl>
-              <Input {...field} placeholder="Ex: NF-e 123456" />
+              <Input {...field} placeholder="Ex: NF-e 123456" className="h-9" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -66,10 +69,13 @@ export function DocumentFields({ form }: DocumentFieldsProps) {
         name="documentType"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Tipo de Documento</FormLabel>
+            <FormLabel className="flex items-center gap-2">
+              <FileText className="h-4 w-4" />
+              Tipo de Documento
+            </FormLabel>
             <Select onValueChange={field.onChange} defaultValue={field.value}>
               <FormControl>
-                <SelectTrigger>
+                <SelectTrigger className="h-9">
                   <SelectValue placeholder="Selecione o tipo" />
                 </SelectTrigger>
               </FormControl>
@@ -91,9 +97,12 @@ export function DocumentFields({ form }: DocumentFieldsProps) {
         name="description"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Descrição/Observação</FormLabel>
+            <FormLabel className="flex items-center gap-2">
+              <AlignLeft className="h-4 w-4" />
+              Descrição/Observação
+            </FormLabel>
             <FormControl>
-              <Textarea {...field} placeholder="Detalhes do pagamento" />
+              <Textarea {...field} placeholder="Detalhes do pagamento" className="min-h-[60px] resize-none" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -105,7 +114,10 @@ export function DocumentFields({ form }: DocumentFieldsProps) {
         name="documentUrl"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Documento Fiscal</FormLabel>
+            <FormLabel className="flex items-center gap-2">
+              <Upload className="h-4 w-4" />
+              Documento Fiscal
+            </FormLabel>
             <FormControl>
               <div className="space-y-2">
                 <Input
@@ -113,14 +125,16 @@ export function DocumentFields({ form }: DocumentFieldsProps) {
                   accept=".pdf,.png,.jpg,.jpeg"
                   onChange={(e) => handleFileUpload(e, 'documentUrl')}
                   disabled={isUploading}
+                  className="h-9"
                 />
                 {field.value && (
                   <a
                     href={field.value}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-blue-600 hover:underline"
+                    className="text-sm text-primary hover:underline inline-flex items-center gap-1"
                   >
+                    <FileText className="h-4 w-4" />
                     Ver documento
                   </a>
                 )}
@@ -142,7 +156,10 @@ export function DocumentFields({ form }: DocumentFieldsProps) {
         name="paymentProofUrl"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Comprovante de Pagamento</FormLabel>
+            <FormLabel className="flex items-center gap-2">
+              <Upload className="h-4 w-4" />
+              Comprovante de Pagamento
+            </FormLabel>
             <FormControl>
               <div className="space-y-2">
                 <Input
@@ -150,14 +167,16 @@ export function DocumentFields({ form }: DocumentFieldsProps) {
                   accept=".pdf,.png,.jpg,.jpeg"
                   onChange={(e) => handleFileUpload(e, 'paymentProofUrl')}
                   disabled={isUploading}
+                  className="h-9"
                 />
                 {field.value && (
                   <a
                     href={field.value}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-blue-600 hover:underline"
+                    className="text-sm text-primary hover:underline inline-flex items-center gap-1"
                   >
+                    <FileText className="h-4 w-4" />
                     Ver comprovante
                   </a>
                 )}

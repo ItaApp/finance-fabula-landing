@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
 import { useUser } from "@supabase/auth-helpers-react"
+import { FileText, User, DollarSign, Database, CheckSquare, UploadCloud } from "lucide-react"
 
 import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
@@ -90,15 +91,21 @@ export function AccountsPayableForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="space-y-6">
-            <div className="rounded-lg border p-4">
-              <h3 className="text-lg font-semibold mb-4">Identificação do Documento</h3>
+            <div className="rounded-lg border p-4 bg-white shadow-sm">
+              <div className="flex items-center gap-2 mb-4">
+                <FileText className="h-5 w-5 text-primary" />
+                <h3 className="text-lg font-semibold">Identificação do Documento</h3>
+              </div>
               <DocumentFields form={form} />
             </div>
           </div>
 
           <div className="space-y-6">
-            <div className="rounded-lg border p-4">
-              <h3 className="text-lg font-semibold mb-4">Dados do Fornecedor</h3>
+            <div className="rounded-lg border p-4 bg-white shadow-sm">
+              <div className="flex items-center gap-2 mb-4">
+                <User className="h-5 w-5 text-primary" />
+                <h3 className="text-lg font-semibold">Dados do Fornecedor</h3>
+              </div>
               <FormField
                 control={form.control}
                 name="supplierId"
@@ -107,7 +114,7 @@ export function AccountsPayableForm() {
                     <FormLabel>Fornecedor</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="h-9">
                           <SelectValue placeholder="Selecione um fornecedor" />
                         </SelectTrigger>
                       </FormControl>
@@ -125,15 +132,21 @@ export function AccountsPayableForm() {
               />
             </div>
 
-            <div className="rounded-lg border p-4">
-              <h3 className="text-lg font-semibold mb-4">Classificação Financeira</h3>
+            <div className="rounded-lg border p-4 bg-white shadow-sm">
+              <div className="flex items-center gap-2 mb-4">
+                <Database className="h-5 w-5 text-primary" />
+                <h3 className="text-lg font-semibold">Classificação Financeira</h3>
+              </div>
               <ClassificationFields form={form} />
             </div>
           </div>
 
           <div className="space-y-6">
-            <div className="rounded-lg border p-4">
-              <h3 className="text-lg font-semibold mb-4">Informações de Pagamento</h3>
+            <div className="rounded-lg border p-4 bg-white shadow-sm">
+              <div className="flex items-center gap-2 mb-4">
+                <DollarSign className="h-5 w-5 text-primary" />
+                <h3 className="text-lg font-semibold">Informações de Pagamento</h3>
+              </div>
               <PaymentFields form={form} />
             </div>
           </div>
