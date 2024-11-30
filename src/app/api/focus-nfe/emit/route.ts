@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/integrations/supabase/client";
 
 interface FiscalNote {
@@ -104,7 +104,7 @@ const buildFocusNFEPayload = (note: FiscalNote): FocusNFEPayload => ({
   },
 });
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const { noteId } = await request.json();
     const note = await getFiscalNote(noteId);
