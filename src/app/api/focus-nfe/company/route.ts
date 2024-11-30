@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { NextResponse } from 'next/server';
+import { Response } from '@supabase/supabase-js';
 
 const focusNfeApiKey = process.env.NFE_API_KEY;
 const supabaseUrl = process.env.SUPABASE_URL;
@@ -50,7 +50,10 @@ export async function POST(request: Request) {
     }
 
     const data = await response.json();
-    return NextResponse.json(data);
+    return new Response(JSON.stringify(data), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
   } catch (error: any) {
     return new Response(JSON.stringify({ message: error.message }), {
       status: 500,
