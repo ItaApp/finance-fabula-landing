@@ -1,58 +1,67 @@
 import { supabase } from "@/integrations/supabase/client";
 
+const handleFocusNFEResponse = async (response: Response) => {
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Erro ao emitir nota fiscal");
+  }
+  return data;
+};
+
+const getFiscalNote = async (noteId: string) => {
+  const { data: note, error } = await supabase
+    .from("fiscal_notes")
+    .select(`
+      *,
+      company:companies(*),
+      client:clients(*)
+    `)
+    .eq("id", noteId)
+    .single();
+
+  if (error) throw error;
+  if (!note) throw new Error("Nota fiscal não encontrada");
+  if (!note.company.ambiente) {
+    throw new Error("Empresa não configurada para emissão de notas fiscais");
+  }
+
+  return note;
+};
+
+const buildFocusNFEPayload = (note: any) => ({
+  natureza_operacao: note.natureza_operacao,
+  valor_total: note.valor_total,
+  items: [
+    {
+      nome: "Serviço de exemplo",
+      codigo: "001",
+      ncm: "00000000",
+      quantidade: 1,
+      unidade: "UN",
+      valor_unitario: note.valor_total,
+      valor_total: note.valor_total,
+    },
+  ],
+  cliente: {
+    cpf_cnpj: note.client.cpf_cnpj,
+    nome_completo: note.client.nome,
+    endereco: note.client.logradouro,
+    complemento: note.client.complemento,
+    bairro: note.client.bairro,
+    cep: note.client.cep,
+    cidade: note.client.cidade,
+    uf: note.client.uf,
+    telefone: note.client.telefone,
+    email: note.client.email,
+  },
+});
+
 export async function POST(request: Request) {
   try {
     const { noteId } = await request.json();
+    const note = await getFiscalNote(noteId);
+    const payload = buildFocusNFEPayload(note);
 
-    // Busca os dados da nota fiscal
-    const { data: note, error: noteError } = await supabase
-      .from("fiscal_notes")
-      .select(`
-        *,
-        company:companies(*),
-        client:clients(*)
-      `)
-      .eq("id", noteId)
-      .single();
-
-    if (noteError) throw noteError;
-    if (!note) throw new Error("Nota fiscal não encontrada");
-
-    // Verifica se a empresa está configurada para emissão
-    if (!note.company.ambiente) {
-      throw new Error("Empresa não configurada para emissão de notas fiscais");
-    }
-
-    // Monta o payload para a API do Focus NFE
-    const payload = {
-      natureza_operacao: note.natureza_operacao,
-      valor_total: note.valor_total,
-      items: [
-        {
-          nome: "Serviço de exemplo",
-          codigo: "001",
-          ncm: "00000000",
-          quantidade: 1,
-          unidade: "UN",
-          valor_unitario: note.valor_total,
-          valor_total: note.valor_total,
-        },
-      ],
-      cliente: {
-        cpf_cnpj: note.client.cpf_cnpj,
-        nome_completo: note.client.nome,
-        endereco: note.client.logradouro,
-        complemento: note.client.complemento,
-        bairro: note.client.bairro,
-        cep: note.client.cep,
-        cidade: note.client.cidade,
-        uf: note.client.uf,
-        telefone: note.client.telefone,
-        email: note.client.email,
-      },
-    };
-
-    // Envia para a API do Focus NFE em modo de homologação
     const focusResponse = await fetch(
       `https://homologacao.focusnfe.com.br/v2/nfse?ref=${note.id}`,
       {
@@ -65,14 +74,8 @@ export async function POST(request: Request) {
       }
     );
 
-    if (!focusResponse.ok) {
-      const error = await focusResponse.json();
-      throw new Error(error.message || "Erro ao emitir nota fiscal");
-    }
+    const focusData = await handleFocusNFEResponse(focusResponse);
 
-    const focusData = await focusResponse.json();
-
-    // Atualiza a nota fiscal com o ID da nota no Focus
     const { error: updateError } = await supabase
       .from("fiscal_notes")
       .update({
@@ -83,21 +86,15 @@ export async function POST(request: Request) {
 
     if (updateError) throw updateError;
 
-    return new Response(
-      JSON.stringify({ message: "Nota fiscal enviada com sucesso" }),
-      { 
-        headers: { "Content-Type": "application/json" },
-        status: 200 
-      }
+    return Response.json(
+      { message: "Nota fiscal enviada com sucesso" },
+      { status: 200 }
     );
   } catch (error: any) {
     console.error("Erro ao emitir nota fiscal:", error);
-    return new Response(
-      JSON.stringify({ message: error.message || "Erro interno do servidor" }),
-      { 
-        headers: { "Content-Type": "application/json" },
-        status: 500 
-      }
+    return Response.json(
+      { message: error.message || "Erro interno do servidor" },
+      { status: 500 }
     );
   }
 }
