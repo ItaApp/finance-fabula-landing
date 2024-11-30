@@ -1,11 +1,16 @@
 import { createClient } from '@supabase/supabase-js';
 
-const focusNfeApiKey = 'edeane3fvShDuQwbYrRditABSB2buvrU';
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 export async function POST(request: Request) {
   try {
+    const focusNfeApiKey = process.env.NFE_API_KEY;
+    
+    if (!focusNfeApiKey) {
+      throw new Error('NFE_API_KEY environment variable is not set');
+    }
+
     const supabase = createClient(supabaseUrl!, supabaseServiceKey!);
     
     // Verify authentication
@@ -54,6 +59,7 @@ export async function POST(request: Request) {
       headers: { 'Content-Type': 'application/json' }
     });
   } catch (error: any) {
+    console.error('Error in focus-nfe company route:', error);
     return new Response(JSON.stringify({ message: error.message }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }

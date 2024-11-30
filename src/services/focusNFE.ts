@@ -100,29 +100,16 @@ export const emitFiscalNote = async (noteId: string) => {
     const note = await getFiscalNote(noteId);
     const payload = buildFocusNFEPayload(note);
 
-    const response = await fetch(
-      `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/emit-fiscal-note`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({ noteId, payload }),
-      }
-    );
+    const { data, error } = await supabase.functions.invoke('emit-fiscal-note', {
+      body: { noteId, payload }
+    });
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || "Erro ao emitir nota fiscal");
-    }
-
-    const focusData = await response.json();
+    if (error) throw error;
 
     const { error: updateError } = await supabase
       .from("fiscal_notes")
       .update({
-        focus_nfe_id: focusData.id,
+        focus_nfe_id: data.id,
         focus_nfe_status: "processing",
       })
       .eq("id", noteId);
