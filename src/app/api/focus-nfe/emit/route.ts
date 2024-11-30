@@ -1,3 +1,4 @@
+import { NextResponse } from "next/server";
 import { supabase } from "@/integrations/supabase/client";
 
 const handleFocusNFEResponse = async (response: Response) => {
@@ -86,13 +87,13 @@ export async function POST(request: Request) {
 
     if (updateError) throw updateError;
 
-    return Response.json(
+    return NextResponse.json(
       { message: "Nota fiscal enviada com sucesso" },
       { status: 200 }
     );
   } catch (error: any) {
     console.error("Erro ao emitir nota fiscal:", error);
-    return Response.json(
+    return NextResponse.json(
       { message: error.message || "Erro interno do servidor" },
       { status: 500 }
     );
