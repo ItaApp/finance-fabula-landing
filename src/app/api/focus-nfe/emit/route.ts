@@ -1,6 +1,27 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/integrations/supabase/client";
 
+interface FiscalNote {
+  id: string;
+  natureza_operacao: string;
+  valor_total: number;
+  client: {
+    cpf_cnpj: string;
+    nome: string;
+    logradouro: string;
+    complemento: string | null;
+    bairro: string;
+    cep: string;
+    cidade: string;
+    uf: string;
+    telefone: string;
+    email: string;
+  };
+  company: {
+    ambiente?: string;
+  };
+}
+
 const handleFocusNFEResponse = async (response: Response) => {
   const data = await response.json();
   if (!response.ok) {
@@ -9,7 +30,7 @@ const handleFocusNFEResponse = async (response: Response) => {
   return data;
 };
 
-const getFiscalNote = async (noteId: string) => {
+const getFiscalNote = async (noteId: string): Promise<FiscalNote> => {
   const { data: note, error } = await supabase
     .from("fiscal_notes")
     .select(`
@@ -29,7 +50,7 @@ const getFiscalNote = async (noteId: string) => {
   return note;
 };
 
-const buildFocusNFEPayload = (note: any) => ({
+const buildFocusNFEPayload = (note: FiscalNote) => ({
   natureza_operacao: note.natureza_operacao,
   valor_total: note.valor_total,
   items: [
