@@ -89,66 +89,60 @@ export function AccountsPayableForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="space-y-6">
-            <div className="rounded-lg border p-4 bg-white shadow-sm">
-              <div className="flex items-center gap-2 mb-4">
-                <FileText className="h-5 w-5 text-primary" />
-                <h3 className="text-lg font-semibold">Identificação do Documento</h3>
-              </div>
-              <DocumentFields form={form} />
+        <div className="space-y-6">
+          <div className="rounded-lg border p-4 bg-white shadow-sm">
+            <div className="flex items-center gap-2 mb-4">
+              <FileText className="h-5 w-5 text-primary" />
+              <h3 className="text-lg font-semibold">Identificação do Documento</h3>
             </div>
+            <DocumentFields form={form} />
           </div>
 
-          <div className="space-y-6">
-            <div className="rounded-lg border p-4 bg-white shadow-sm">
-              <div className="flex items-center gap-2 mb-4">
-                <User className="h-5 w-5 text-primary" />
-                <h3 className="text-lg font-semibold">Dados do Fornecedor</h3>
-              </div>
-              <FormField
-                control={form.control}
-                name="supplierId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Fornecedor</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="h-9">
-                          <SelectValue placeholder="Selecione um fornecedor" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {suppliers?.map((supplier) => (
-                          <SelectItem key={supplier.id} value={supplier.id}>
-                            {supplier.nome}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+          <div className="rounded-lg border p-4 bg-white shadow-sm">
+            <div className="flex items-center gap-2 mb-4">
+              <User className="h-5 w-5 text-primary" />
+              <h3 className="text-lg font-semibold">Dados do Fornecedor</h3>
             </div>
-
-            <div className="rounded-lg border p-4 bg-white shadow-sm">
-              <div className="flex items-center gap-2 mb-4">
-                <Database className="h-5 w-5 text-primary" />
-                <h3 className="text-lg font-semibold">Classificação Financeira</h3>
-              </div>
-              <ClassificationFields form={form} />
-            </div>
+            <FormField
+              control={form.control}
+              name="supplierId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Fornecedor</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger className="h-9">
+                        <SelectValue placeholder="Selecione um fornecedor" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {suppliers?.map((supplier) => (
+                        <SelectItem key={supplier.id} value={supplier.id}>
+                          {supplier.nome}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
 
-          <div className="space-y-6">
-            <div className="rounded-lg border p-4 bg-white shadow-sm">
-              <div className="flex items-center gap-2 mb-4">
-                <DollarSign className="h-5 w-5 text-primary" />
-                <h3 className="text-lg font-semibold">Informações de Pagamento</h3>
-              </div>
-              <PaymentFields form={form} />
+          <div className="rounded-lg border p-4 bg-white shadow-sm">
+            <div className="flex items-center gap-2 mb-4">
+              <Database className="h-5 w-5 text-primary" />
+              <h3 className="text-lg font-semibold">Classificação Financeira</h3>
             </div>
+            <ClassificationFields form={form} />
+          </div>
+
+          <div className="rounded-lg border p-4 bg-white shadow-sm">
+            <div className="flex items-center gap-2 mb-4">
+              <DollarSign className="h-5 w-5 text-primary" />
+              <h3 className="text-lg font-semibold">Informações de Pagamento</h3>
+            </div>
+            <PaymentFields form={form} />
           </div>
         </div>
 
