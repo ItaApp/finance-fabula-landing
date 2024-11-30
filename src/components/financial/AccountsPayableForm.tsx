@@ -124,11 +124,16 @@ export function AccountsPayableForm() {
                 )}
               />
             </div>
+
+            <div className="rounded-lg border p-4">
+              <h3 className="text-lg font-semibold mb-4">Classificação Financeira</h3>
+              <ClassificationFields form={form} />
+            </div>
           </div>
 
           <div className="space-y-6">
             <div className="rounded-lg border p-4">
-              <h3 className="text-lg font-semibold mb-4">Informações de Lançamento</h3>
+              <h3 className="text-lg font-semibold mb-4">Informações de Pagamento</h3>
               <PaymentFields form={form} />
             </div>
           </div>
