@@ -44,6 +44,8 @@ const Auth = () => {
                 input: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm',
                 button: 'w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black',
                 anchor: 'text-sm font-medium text-black hover:text-gray-800',
+                divider: 'my-4',
+                message: 'text-sm text-gray-600',
               },
             }}
             localization={{
@@ -52,17 +54,20 @@ const Auth = () => {
                   email_label: 'Email',
                   password_label: 'Senha',
                   button_label: 'Entrar',
+                  link_text: 'Já tem uma conta? Entre aqui',
                 },
                 sign_up: {
                   email_label: 'Email',
                   password_label: 'Senha',
                   button_label: 'Cadastrar',
+                  link_text: 'Não tem uma conta? Cadastre-se',
                   confirmation_text: '',
                 },
               },
             }}
             providers={[]}
             view="sign_up"
+            showLinks={true}
             additionalData={{
               name: {
                 label: 'Nome completo',
