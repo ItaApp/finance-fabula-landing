@@ -12,6 +12,8 @@ import { DocumentFields } from "./accounts-payable/DocumentFields"
 import { PaymentFields } from "./accounts-payable/PaymentFields"
 import { ClassificationFields } from "./accounts-payable/ClassificationFields"
 import { accountsPayableSchema, type AccountsPayableFormValues } from "./accounts-payable/types"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
 
 export function AccountsPayableForm() {
   const user = useUser()
@@ -86,13 +88,49 @@ export function AccountsPayableForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="space-y-6">
-            <DocumentFields form={form} />
-            <PaymentFields form={form} />
+            <div className="rounded-lg border p-4">
+              <h3 className="text-lg font-semibold mb-4">Identificação do Documento</h3>
+              <DocumentFields form={form} />
+            </div>
           </div>
+
           <div className="space-y-6">
-            <ClassificationFields form={form} />
+            <div className="rounded-lg border p-4">
+              <h3 className="text-lg font-semibold mb-4">Dados do Fornecedor</h3>
+              <FormField
+                control={form.control}
+                name="supplierId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Fornecedor</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecione um fornecedor" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {suppliers?.map((supplier) => (
+                          <SelectItem key={supplier.id} value={supplier.id}>
+                            {supplier.nome}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <div className="rounded-lg border p-4">
+              <h3 className="text-lg font-semibold mb-4">Informações de Lançamento</h3>
+              <PaymentFields form={form} />
+            </div>
           </div>
         </div>
 

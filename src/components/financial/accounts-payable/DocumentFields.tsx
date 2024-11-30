@@ -1,6 +1,7 @@
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
 import { UseFormReturn } from "react-hook-form"
 import { AccountsPayableFormValues } from "./types"
 
@@ -18,7 +19,7 @@ export function DocumentFields({ form }: DocumentFieldsProps) {
           <FormItem>
             <FormLabel>Número do Documento</FormLabel>
             <FormControl>
-              <Input {...field} />
+              <Input {...field} placeholder="Ex: NF-e 123456" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -38,12 +39,27 @@ export function DocumentFields({ form }: DocumentFieldsProps) {
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                <SelectItem value="nfe">Nota Fiscal Eletrônica</SelectItem>
+                <SelectItem value="nfe">NF-e</SelectItem>
                 <SelectItem value="boleto">Boleto</SelectItem>
                 <SelectItem value="contrato">Contrato</SelectItem>
                 <SelectItem value="recibo">Recibo</SelectItem>
+                <SelectItem value="outros">Outros</SelectItem>
               </SelectContent>
             </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="description"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Descrição/Observação</FormLabel>
+            <FormControl>
+              <Textarea {...field} placeholder="Detalhes do pagamento" />
+            </FormControl>
             <FormMessage />
           </FormItem>
         )}
