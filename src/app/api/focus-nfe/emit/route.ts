@@ -22,6 +22,32 @@ interface FiscalNote {
   };
 }
 
+interface FocusNFEPayload {
+  natureza_operacao: string;
+  valor_total: number;
+  items: Array<{
+    nome: string;
+    codigo: string;
+    ncm: string;
+    quantidade: number;
+    unidade: string;
+    valor_unitario: number;
+    valor_total: number;
+  }>;
+  cliente: {
+    cpf_cnpj: string;
+    nome_completo: string;
+    endereco: string;
+    complemento: string | null;
+    bairro: string;
+    cep: string;
+    cidade: string;
+    uf: string;
+    telefone: string;
+    email: string;
+  };
+}
+
 const handleFocusNFEResponse = async (response: Response) => {
   const data = await response.json();
   if (!response.ok) {
@@ -50,7 +76,7 @@ const getFiscalNote = async (noteId: string): Promise<FiscalNote> => {
   return note;
 };
 
-const buildFocusNFEPayload = (note: FiscalNote) => ({
+const buildFocusNFEPayload = (note: FiscalNote): FocusNFEPayload => ({
   natureza_operacao: note.natureza_operacao,
   valor_total: note.valor_total,
   items: [
