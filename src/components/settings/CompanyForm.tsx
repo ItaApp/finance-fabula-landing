@@ -41,7 +41,8 @@ export const CompanyForm = ({ initialData }: CompanyFormProps) => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) throw new Error("Não autorizado");
 
-      const { data, error } = await supabase
+      // Salva no Supabase
+      const { data: companyData, error } = await supabase
         .from("companies")
         .upsert({
           nome: values.nome,
@@ -64,7 +65,23 @@ export const CompanyForm = ({ initialData }: CompanyFormProps) => {
         .single();
 
       if (error) throw error;
-      return data;
+
+      // Integra com FocusNFE
+      const focusResponse = await fetch('/functions/v1/focus-nfe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({ data: values }),
+      });
+
+      if (!focusResponse.ok) {
+        const error = await focusResponse.json();
+        throw new Error(`Erro ao integrar com FocusNFE: ${error.message}`);
+      }
+
+      return companyData;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["company"] });
@@ -76,7 +93,7 @@ export const CompanyForm = ({ initialData }: CompanyFormProps) => {
     onError: (error) => {
       toast({
         title: "Erro",
-        description: "Erro ao atualizar dados da empresa",
+        description: error.message || "Erro ao atualizar dados da empresa",
         variant: "destructive",
       });
       console.error(error);
