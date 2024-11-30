@@ -25,15 +25,17 @@ const companyFormSchema = z.object({
   regime_tributario: z.string().optional(),
 });
 
+type CompanyFormValues = z.infer<typeof companyFormSchema>;
+
 type CompanyFormProps = {
-  initialData?: z.infer<typeof companyFormSchema>;
+  initialData?: CompanyFormValues;
   userId: string;
 };
 
 export function CompanyForm({ initialData, userId }: CompanyFormProps) {
   const queryClient = useQueryClient();
   
-  const form = useForm<z.infer<typeof companyFormSchema>>({
+  const form = useForm<CompanyFormValues>({
     resolver: zodResolver(companyFormSchema),
     defaultValues: initialData || {
       name: "",
@@ -47,15 +49,20 @@ export function CompanyForm({ initialData, userId }: CompanyFormProps) {
   });
 
   const mutation = useMutation({
-    mutationFn: async (values: z.infer<typeof companyFormSchema>) => {
+    mutationFn: async (values: CompanyFormValues) => {
       const { data, error } = await supabase
         .from("companies")
         .upsert({
-          ...values,
+          name: values.name,
+          cnpj: values.cnpj,
+          email: values.email,
+          phone: values.phone,
+          inscricao_municipal: values.inscricao_municipal,
+          inscricao_estadual: values.inscricao_estadual,
+          regime_tributario: values.regime_tributario,
           owner_id: userId,
           ambiente: "homologacao",
           integranotas_id: "edeane3fvShDuQwbYrRditABSB2buvrU",
-          cnpj: values.cnpj, // Ensure CNPJ is included
         })
         .select()
         .single();
@@ -73,7 +80,7 @@ export function CompanyForm({ initialData, userId }: CompanyFormProps) {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof companyFormSchema>) => {
+  const onSubmit = (values: CompanyFormValues) => {
     mutation.mutate(values);
   };
 
