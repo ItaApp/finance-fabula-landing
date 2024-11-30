@@ -47,50 +47,52 @@ export function DocumentFields({ form }: DocumentFieldsProps) {
 
   return (
     <div className="space-y-4">
-      <FormField
-        control={form.control}
-        name="documentNumber"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel className="flex items-center gap-2">
-              <FileText className="h-4 w-4" />
-              Número do Documento
-            </FormLabel>
-            <FormControl>
-              <Input {...field} placeholder="Ex: NF-e 123456" className="h-9" />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-
-      <FormField
-        control={form.control}
-        name="documentType"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel className="flex items-center gap-2">
-              <FileText className="h-4 w-4" />
-              Tipo de Documento
-            </FormLabel>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <FormField
+          control={form.control}
+          name="documentNumber"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                Número do Documento
+              </FormLabel>
               <FormControl>
-                <SelectTrigger className="h-9">
-                  <SelectValue placeholder="Selecione o tipo" />
-                </SelectTrigger>
+                <Input {...field} placeholder="Ex: NF-e 123456" className="h-9" />
               </FormControl>
-              <SelectContent>
-                <SelectItem value="nfe">NF-e</SelectItem>
-                <SelectItem value="boleto">Boleto</SelectItem>
-                <SelectItem value="contrato">Contrato</SelectItem>
-                <SelectItem value="recibo">Recibo</SelectItem>
-                <SelectItem value="outros">Outros</SelectItem>
-              </SelectContent>
-            </Select>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="documentType"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                Tipo de Documento
+              </FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className="h-9">
+                    <SelectValue placeholder="Selecione o tipo" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="nfe">NF-e</SelectItem>
+                  <SelectItem value="boleto">Boleto</SelectItem>
+                  <SelectItem value="contrato">Contrato</SelectItem>
+                  <SelectItem value="recibo">Recibo</SelectItem>
+                  <SelectItem value="outros">Outros</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
 
       <FormField
         control={form.control}
@@ -109,89 +111,91 @@ export function DocumentFields({ form }: DocumentFieldsProps) {
         )}
       />
 
-      <FormField
-        control={form.control}
-        name="documentUrl"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel className="flex items-center gap-2">
-              <Upload className="h-4 w-4" />
-              Documento Fiscal
-            </FormLabel>
-            <FormControl>
-              <div className="space-y-2">
-                <Input
-                  type="file"
-                  accept=".pdf,.png,.jpg,.jpeg"
-                  onChange={(e) => handleFileUpload(e, 'documentUrl')}
-                  disabled={isUploading}
-                  className="h-9"
-                />
-                {field.value && (
-                  <a
-                    href={field.value}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-primary hover:underline inline-flex items-center gap-1"
-                  >
-                    <FileText className="h-4 w-4" />
-                    Ver documento
-                  </a>
-                )}
-                {isUploading && (
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    <span>Enviando arquivo...</span>
-                  </div>
-                )}
-              </div>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormField
+          control={form.control}
+          name="documentUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="flex items-center gap-2">
+                <Upload className="h-4 w-4" />
+                Documento Fiscal
+              </FormLabel>
+              <FormControl>
+                <div className="space-y-2">
+                  <Input
+                    type="file"
+                    accept=".pdf,.png,.jpg,.jpeg"
+                    onChange={(e) => handleFileUpload(e, 'documentUrl')}
+                    disabled={isUploading}
+                    className="h-9"
+                  />
+                  {field.value && (
+                    <a
+                      href={field.value}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-primary hover:underline inline-flex items-center gap-1"
+                    >
+                      <FileText className="h-4 w-4" />
+                      Ver documento
+                    </a>
+                  )}
+                  {isUploading && (
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      <span>Enviando arquivo...</span>
+                    </div>
+                  )}
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <FormField
-        control={form.control}
-        name="paymentProofUrl"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel className="flex items-center gap-2">
-              <Upload className="h-4 w-4" />
-              Comprovante de Pagamento
-            </FormLabel>
-            <FormControl>
-              <div className="space-y-2">
-                <Input
-                  type="file"
-                  accept=".pdf,.png,.jpg,.jpeg"
-                  onChange={(e) => handleFileUpload(e, 'paymentProofUrl')}
-                  disabled={isUploading}
-                  className="h-9"
-                />
-                {field.value && (
-                  <a
-                    href={field.value}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-primary hover:underline inline-flex items-center gap-1"
-                  >
-                    <FileText className="h-4 w-4" />
-                    Ver comprovante
-                  </a>
-                )}
-                {isUploading && (
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    <span>Enviando arquivo...</span>
-                  </div>
-                )}
-              </div>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        <FormField
+          control={form.control}
+          name="paymentProofUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="flex items-center gap-2">
+                <Upload className="h-4 w-4" />
+                Comprovante de Pagamento
+              </FormLabel>
+              <FormControl>
+                <div className="space-y-2">
+                  <Input
+                    type="file"
+                    accept=".pdf,.png,.jpg,.jpeg"
+                    onChange={(e) => handleFileUpload(e, 'paymentProofUrl')}
+                    disabled={isUploading}
+                    className="h-9"
+                  />
+                  {field.value && (
+                    <a
+                      href={field.value}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-primary hover:underline inline-flex items-center gap-1"
+                    >
+                      <FileText className="h-4 w-4" />
+                      Ver comprovante
+                    </a>
+                  )}
+                  {isUploading && (
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      <span>Enviando arquivo...</span>
+                    </div>
+                  )}
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
     </div>
   )
 }
