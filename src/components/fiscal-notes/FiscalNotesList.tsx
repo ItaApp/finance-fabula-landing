@@ -100,6 +100,13 @@ export function FiscalNotesList({ notes }: FiscalNotesListProps) {
       });
     } catch (error: any) {
       console.error("Error emitting note:", error);
+
+      // Reverte o status para draft em caso de erro
+      await supabase
+        .from("fiscal_notes")
+        .update({ status: "draft" })
+        .eq("id", noteId);
+
       toast({
         variant: "destructive",
         title: "Erro ao emitir nota fiscal",

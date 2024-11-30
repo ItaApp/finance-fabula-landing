@@ -106,7 +106,16 @@ const buildFocusNFEPayload = (note: FiscalNote): FocusNFEPayload => ({
 
 export async function POST(request: NextRequest) {
   try {
-    const { noteId } = await request.json();
+    const body = await request.json();
+    const { noteId } = body;
+
+    if (!noteId) {
+      return NextResponse.json(
+        { message: "ID da nota fiscal não fornecido" },
+        { status: 400 }
+      );
+    }
+
     const note = await getFiscalNote(noteId);
     const payload = buildFocusNFEPayload(note);
 
