@@ -52,7 +52,7 @@ export async function POST(request: Request) {
       },
     };
 
-    // Envia para a API do Focus NFE
+    // Envia para a API do Focus NFE em modo de homologação
     const focusResponse = await fetch(
       `https://homologacao.focusnfe.com.br/v2/nfse?ref=${note.id}`,
       {
