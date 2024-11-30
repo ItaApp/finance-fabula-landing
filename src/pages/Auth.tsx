@@ -43,6 +43,7 @@ const Auth = () => {
                 label: 'block text-sm font-medium text-gray-700',
                 input: 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm',
                 button: 'w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black',
+                anchor: 'text-sm font-medium text-black hover:text-gray-800',
               },
             }}
             localization={{
