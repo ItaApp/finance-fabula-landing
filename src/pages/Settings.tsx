@@ -16,7 +16,8 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Home, User, Truck, DollarSign, FileText, Settings as SettingsIcon } from "lucide-react";
+import { Home, User, Truck, DollarSign, FileText, Settings as SettingsIcon, Building2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Settings = () => {
   const navigate = useNavigate();
@@ -122,6 +123,17 @@ const Settings = () => {
               <p className="text-muted-foreground">
                 Gerencie as configurações da sua empresa
               </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+              <Button variant="outline" size="lg" className="h-24">
+                <User className="mr-2 h-5 w-5" />
+                Minhas informações
+              </Button>
+              <Button variant="outline" size="lg" className="h-24">
+                <Building2 className="mr-2 h-5 w-5" />
+                Minha empresa
+              </Button>
             </div>
 
             <Card>
