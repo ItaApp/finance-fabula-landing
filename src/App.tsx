@@ -8,7 +8,6 @@ import Dashboard from "./pages/Dashboard";
 import Client from "./pages/Client";
 import Supplier from "./pages/Supplier";
 import Financial from "./pages/Financial";
-import Settings from "./pages/Settings";
 
 const queryClient = new QueryClient();
 
@@ -24,7 +23,6 @@ const App = () => (
           <Route path="/client" element={<Client />} />
           <Route path="/supplier" element={<Supplier />} />
           <Route path="/financial" element={<Financial />} />
-          <Route path="/settings" element={<Settings />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
