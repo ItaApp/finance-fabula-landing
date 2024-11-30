@@ -1,23 +1,8 @@
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { supabase } from "@/integrations/supabase/client";
 
 export async function POST(request: Request) {
   try {
-    const supabase = createRouteHandlerClient({ cookies });
     const { noteId } = await request.json();
-
-    // Verifica autenticação
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-
-    if (!session) {
-      return new Response(
-        JSON.stringify({ message: "Não autorizado" }),
-        { status: 401 }
-      );
-    }
 
     // Busca os dados da nota fiscal
     const { data: note, error: noteError } = await supabase
@@ -98,12 +83,21 @@ export async function POST(request: Request) {
 
     if (updateError) throw updateError;
 
-    return NextResponse.json({ message: "Nota fiscal enviada com sucesso" });
+    return new Response(
+      JSON.stringify({ message: "Nota fiscal enviada com sucesso" }),
+      { 
+        headers: { "Content-Type": "application/json" },
+        status: 200 
+      }
+    );
   } catch (error: any) {
     console.error("Erro ao emitir nota fiscal:", error);
     return new Response(
       JSON.stringify({ message: error.message || "Erro interno do servidor" }),
-      { status: 500 }
+      { 
+        headers: { "Content-Type": "application/json" },
+        status: 500 
+      }
     );
   }
 }
