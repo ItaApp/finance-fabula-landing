@@ -20,8 +20,8 @@ serve(async (req) => {
 
     console.log('Emitting fiscal note:', { noteId, payload })
 
-    // Create Basic Auth token with proper format: username:password
-    const basicAuthToken = btoa(`${focusNfeApiKey}:`)
+    // Create Basic Auth token
+    const basicAuthToken = btoa(focusNfeApiKey + ':')
 
     const apiUrl = `https://homologacao.focusnfe.com.br/v2/nfse?ref=${noteId}`
 
