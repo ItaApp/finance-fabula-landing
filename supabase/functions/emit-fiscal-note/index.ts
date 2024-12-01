@@ -21,8 +21,10 @@ serve(async (req) => {
 
     console.log('Emitting fiscal note:', { noteId, payload })
 
-    // Create Basic Auth token using base64 encoding
-    const basicAuthToken = btoa(focusNfeApiKey + ':')
+    // Create Basic Auth token using Uint8Array and TextEncoder
+    const encoder = new TextEncoder()
+    const data = encoder.encode(`${focusNfeApiKey}:`)
+    const basicAuthToken = btoa(String.fromCharCode(...new Uint8Array(data)))
 
     const apiUrl = `https://homologacao.focusnfe.com.br/v2/nfse?ref=${noteId}`
 
