@@ -20,9 +20,9 @@ serve(async (req) => {
 
     console.log('Emitting fiscal note:', { noteId, payload })
 
-    const credentials = `${focusNfeApiKey}:`
-    const encodedCredentials = btoa(credentials)
-    
+    // Create Basic Auth token properly
+    const basicAuth = btoa(`${focusNfeApiKey}:`)
+
     const apiUrl = `https://homologacao.focusnfe.com.br/v2/nfse?ref=${noteId}`
 
     console.log('Calling Focus NFE API:', apiUrl)
@@ -31,7 +31,7 @@ serve(async (req) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Basic ${encodedCredentials}`
+        "Authorization": `Basic ${basicAuth}`
       },
       body: JSON.stringify(payload)
     })
@@ -48,9 +48,8 @@ serve(async (req) => {
     }
 
     if (!response.ok) {
-      const errorMessage = data?.message || responseText || 'Unknown API error'
-      console.error('Focus NFE API error:', errorMessage)
-      throw new Error(errorMessage)
+      console.error('Focus NFE API error response:', data)
+      throw new Error(data?.message || responseText || 'Unknown API error')
     }
 
     return new Response(
