@@ -8,7 +8,7 @@ const corsHeaders = {
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: corsHeaders })
+    return new Response(null, { headers: corsHeaders })
   }
 
   try {
@@ -21,8 +21,10 @@ serve(async (req) => {
 
     console.log('Emitting fiscal note:', { noteId, payload })
 
-    // Create Basic Auth token
-    const basicAuthToken = btoa(`${focusNfeApiKey}:`)
+    // Create Basic Auth token using TextEncoder and btoa
+    const encoder = new TextEncoder()
+    const authString = `${focusNfeApiKey}:`
+    const basicAuthToken = btoa(String.fromCharCode(...encoder.encode(authString)))
 
     const apiUrl = `https://homologacao.focusnfe.com.br/v2/nfse?ref=${noteId}`
 
