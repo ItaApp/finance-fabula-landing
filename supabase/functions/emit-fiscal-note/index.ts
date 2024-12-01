@@ -20,7 +20,6 @@ serve(async (req) => {
 
     console.log('Emitting fiscal note:', { noteId, payload })
 
-    // Create Base64 encoded credentials for Basic Auth
     const credentials = `${focusNfeApiKey}:`
     const encodedCredentials = btoa(credentials)
     
@@ -42,8 +41,7 @@ serve(async (req) => {
 
     let data
     try {
-      // Only try to parse as JSON if we have content
-      data = responseText ? JSON.parse(responseText) : null
+      data = responseText ? JSON.parse(responseText) : {}
     } catch (e) {
       console.error('Failed to parse Focus NFE API response:', e)
       throw new Error(`Invalid API response format: ${responseText}`)
@@ -67,8 +65,8 @@ serve(async (req) => {
     
     return new Response(
       JSON.stringify({ 
-        error: error.message,
-        details: error.stack,
+        error: error.message || 'Internal server error',
+        details: error.stack || '',
         timestamp: new Date().toISOString()
       }),
       { 
