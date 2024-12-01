@@ -20,8 +20,10 @@ serve(async (req) => {
 
     console.log('Emitting fiscal note:', { noteId, payload })
 
-    // Properly encode the API key for Basic Auth
-    const authString = btoa(focusNfeApiKey + ':')
+    // Create Base64 encoded credentials for Basic Auth
+    const credentials = `${focusNfeApiKey}:`
+    const encodedCredentials = btoa(credentials)
+    
     const apiUrl = `https://homologacao.focusnfe.com.br/v2/nfse?ref=${noteId}`
 
     console.log('Calling Focus NFE API:', apiUrl)
@@ -30,7 +32,7 @@ serve(async (req) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Basic ${authString}`
+        "Authorization": `Basic ${encodedCredentials}`
       },
       body: JSON.stringify(payload)
     })
@@ -38,19 +40,19 @@ serve(async (req) => {
     const responseText = await response.text()
     console.log('Focus NFE API raw response:', responseText)
 
-    // Try to parse the response as JSON
     let data
     try {
-      data = JSON.parse(responseText)
+      // Only try to parse as JSON if we have content
+      data = responseText ? JSON.parse(responseText) : null
     } catch (e) {
       console.error('Failed to parse Focus NFE API response:', e)
-      throw new Error(`Failed to parse Focus NFE API response: ${responseText}`)
+      throw new Error(`Invalid API response format: ${responseText}`)
     }
 
-    // Check if the response indicates an error
     if (!response.ok) {
-      console.error('Focus NFE API error response:', data)
-      throw new Error(data.message || "Error from Focus NFE API")
+      const errorMessage = data?.message || responseText || 'Unknown API error'
+      console.error('Focus NFE API error:', errorMessage)
+      throw new Error(errorMessage)
     }
 
     return new Response(
@@ -63,7 +65,6 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in emit-fiscal-note:', error)
     
-    // Return a more detailed error response
     return new Response(
       JSON.stringify({ 
         error: error.message,
