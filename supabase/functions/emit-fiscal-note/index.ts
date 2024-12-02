@@ -13,22 +13,32 @@ serve(async (req) => {
 
   try {
     const { noteId, payload } = await req.json()
-    const focusNfeApiKey = Deno.env.get('NFE_API_KEY')
+    console.log('Received request for note:', noteId)
+    console.log('Payload:', JSON.stringify(payload, null, 2))
 
+    const focusNfeApiKey = Deno.env.get('NFE_API_KEY')
     if (!focusNfeApiKey) {
+      console.error('NFE_API_KEY not found in environment variables')
       throw new Error('NFE_API_KEY environment variable is not set')
     }
 
-    console.log('Emitting fiscal note:', { noteId, payload })
+    // Validate required fields
+    if (!payload.natureza_operacao) {
+      throw new Error('natureza_operacao é obrigatório')
+    }
+    if (!payload.cliente?.cpf_cnpj) {
+      throw new Error('CPF/CNPJ do cliente é obrigatório')
+    }
 
-    // Create Basic Auth token using native Deno TextEncoder
+    console.log('Preparing to call Focus NFE API')
+
+    // Create Basic Auth token
     const encoder = new TextEncoder()
     const authString = `${focusNfeApiKey}:`
     const encoded = encoder.encode(authString)
     const basicAuthToken = btoa(String.fromCharCode.apply(null, encoded))
 
     const apiUrl = `https://homologacao.focusnfe.com.br/v2/nfse?ref=${noteId}`
-
     console.log('Calling Focus NFE API:', apiUrl)
 
     const response = await fetch(apiUrl, {
@@ -53,7 +63,7 @@ serve(async (req) => {
 
     if (!response.ok) {
       console.error('Focus NFE API error response:', data)
-      throw new Error(data?.message || responseText || 'Unknown API error')
+      throw new Error(data?.mensagem || data?.message || responseText || 'Erro desconhecido da API')
     }
 
     return new Response(
@@ -68,7 +78,7 @@ serve(async (req) => {
     
     return new Response(
       JSON.stringify({ 
-        error: error.message || 'Internal server error',
+        error: error.message || 'Erro interno do servidor',
         details: error.stack || '',
         timestamp: new Date().toISOString()
       }),
