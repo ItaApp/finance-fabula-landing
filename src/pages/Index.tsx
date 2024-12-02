@@ -1,4 +1,4 @@
-import { DollarSign, Building, HandShake, ChartBar, Users, Globe, Rocket, Award } from "lucide-react";
+import { DollarSign, Building, Handshake, ChartBar, Users, Globe, Rocket, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
@@ -69,7 +69,7 @@ const Index = () => {
                   onClick={() => navigate("/auth")}
                 >
                   Agendar Demonstração
-                  <HandShake className="ml-2 h-5 w-5" />
+                  <Handshake className="ml-2 h-5 w-5" />
                 </Button>
               </div>
             </div>
