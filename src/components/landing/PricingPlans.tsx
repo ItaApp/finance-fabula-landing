@@ -50,10 +50,10 @@ export const PricingPlans = () => {
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-dark mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-primary mb-4">
             Escolha o Plano Ideal
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-muted-foreground">
             Soluções flexíveis para cada etapa do seu negócio
           </p>
         </div>
@@ -72,8 +72,8 @@ export const PricingPlans = () => {
                 <CardTitle className="text-2xl font-bold">{plan.name}</CardTitle>
                 <CardDescription>{plan.description}</CardDescription>
                 <div className="mt-4">
-                  <span className="text-4xl font-bold text-dark">{plan.price}</span>
-                  <span className="text-gray-600">/mês</span>
+                  <span className="text-4xl font-bold text-primary">{plan.price}</span>
+                  <span className="text-muted-foreground">/mês</span>
                 </div>
               </CardHeader>
               <CardContent>
@@ -81,7 +81,7 @@ export const PricingPlans = () => {
                   {plan.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-center gap-2">
                       <Check className="w-5 h-5 text-primary" />
-                      <span>{feature}</span>
+                      <span className="text-muted-foreground">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -93,7 +93,7 @@ export const PricingPlans = () => {
                       ? "bg-primary hover:bg-primary/90"
                       : plan.name === "Premium"
                       ? "bg-secondary hover:bg-secondary/90"
-                      : "bg-dark hover:bg-dark/90"
+                      : ""
                   }`}
                   onClick={() => navigate("/auth")}
                 >
