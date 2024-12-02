@@ -18,7 +18,7 @@ export function AppSidebar() {
       <SidebarHeader className="border-b border-border/5">
         <div className="flex h-[60px] items-center px-6">
           <SidebarTrigger />
-          <span className="ml-2 text-lg font-semibold">ERP ITA</span>
+          <span className="ml-2 text-lg font-semibold">Sistema de Gestão</span>
         </div>
       </SidebarHeader>
       <SidebarContent>
