@@ -19,7 +19,7 @@ const Index = () => {
       <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="text-xl font-bold text-dark">FinanceFabula</div>
+            <div className="text-xl font-bold text-dark">ERP ITA</div>
             <div className="flex gap-4">
               <Button
                 variant="outline"
@@ -48,7 +48,7 @@ const Index = () => {
           <div className="max-w-7xl mx-auto">
             <div className="text-center">
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-8 animate-fade-up">
-                Gestão Financeira Simplificada
+                Gestão Empresarial Simplificada
               </h1>
               <p className="text-lg sm:text-xl text-gray-300 mb-10 animate-fade-up" style={{ animationDelay: "0.2s" }}>
                 Emita notas fiscais, controle suas finanças e tome decisões mais inteligentes
