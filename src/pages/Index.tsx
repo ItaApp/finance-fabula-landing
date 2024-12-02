@@ -19,7 +19,7 @@ const Index = () => {
       <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="text-xl font-bold text-dark">ERP ITA</div>
+            <div className="text-xl font-bold text-primary">ERP ITA</div>
             <div className="flex gap-4">
               <Button
                 variant="outline"
@@ -44,7 +44,7 @@ const Index = () => {
       {/* Add padding to account for fixed header */}
       <div className="pt-16">
         {/* Hero Section */}
-        <section className="relative bg-dark py-20 px-4 sm:px-6 lg:px-8">
+        <section className="relative bg-primary py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <div className="text-center">
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-8 animate-fade-up">
@@ -55,7 +55,7 @@ const Index = () => {
               </p>
               <Button
                 size="lg"
-                className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg animate-fade-up"
+                className="bg-white hover:bg-white/90 text-primary px-8 py-6 text-lg animate-fade-up"
                 style={{ animationDelay: "0.4s" }}
                 onClick={() => navigate("/auth")}
               >
