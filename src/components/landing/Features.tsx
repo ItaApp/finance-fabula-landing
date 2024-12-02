@@ -27,7 +27,7 @@ export const Features = () => {
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center text-dark mb-16">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center text-primary mb-16">
           Recursos Principais
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -38,8 +38,8 @@ export const Features = () => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="text-primary mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold text-dark mb-2">{feature.title}</h3>
-              <p className="text-gray-600">{feature.description}</p>
+              <h3 className="text-xl font-semibold text-primary mb-2">{feature.title}</h3>
+              <p className="text-muted-foreground">{feature.description}</p>
             </div>
           ))}
         </div>
